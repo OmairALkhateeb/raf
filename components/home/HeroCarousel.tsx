@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, type PanInfo, type Variants } from 'framer-motion';
 import { Banner } from '@/types';
 import { useLanguage } from '@/contexts/LanguageContext';
 
@@ -12,16 +12,26 @@ interface HeroCarouselProps {
   banners: Banner[];
 }
 
-const slideVariants = {
-  enter: (dir: number) => ({ opacity: 0, scale: 1.04 }),
-  center: { opacity: 1, scale: 1 },
-  exit: (dir: number) => ({ opacity: 0, scale: 0.98 }),
+const SLIDE_DURATION = 6500;
+const SWIPE_THRESHOLD = 60;
+
+const slideVariants: Variants = {
+  enter: { opacity: 0 },
+  center: { opacity: 1 },
+  exit: { opacity: 0 },
 };
 
-const contentVariants = {
-  enter: (dir: number) => ({ opacity: 0, y: 40 }),
-  center: { opacity: 1, y: 0 },
-  exit: (dir: number) => ({ opacity: 0, y: -20 }),
+// Staggered reveal: each content element enters slightly after the previous
+const contentContainer: Variants = {
+  enter: {},
+  center: { transition: { staggerChildren: 0.1, delayChildren: 0.25 } },
+  exit: { transition: { staggerChildren: 0.04, staggerDirection: -1 } },
+};
+
+const contentItem: Variants = {
+  enter: { opacity: 0, y: 32 },
+  center: { opacity: 1, y: 0, transition: { duration: 0.65, ease: [0.25, 0.46, 0.45, 0.94] } },
+  exit: { opacity: 0, y: -16, transition: { duration: 0.3 } },
 };
 
 export default function HeroCarousel({ banners }: HeroCarouselProps) {
@@ -42,9 +52,14 @@ export default function HeroCarousel({ banners }: HeroCarouselProps) {
 
   useEffect(() => {
     if (isPaused) return;
-    const timer = setInterval(next, 6000);
+    const timer = setInterval(next, SLIDE_DURATION);
     return () => clearInterval(timer);
   }, [next, isPaused]);
+
+  const handleDragEnd = (_: unknown, info: PanInfo) => {
+    if (info.offset.x < -SWIPE_THRESHOLD) next();
+    else if (info.offset.x > SWIPE_THRESHOLD) prev();
+  };
 
   const banner = banners[active];
 
@@ -55,27 +70,32 @@ export default function HeroCarousel({ banners }: HeroCarouselProps) {
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
-      {/* Slides */}
-      <AnimatePresence custom={direction} mode="sync">
+      {/* Slides — crossfade between slides, slow Ken Burns zoom while visible */}
+      <AnimatePresence mode="sync">
         <motion.div
           key={active}
-          custom={direction}
           variants={slideVariants}
           initial="enter"
           animate="center"
           exit="exit"
-          transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1] }}
+          transition={{ duration: 1.1, ease: [0.45, 0, 0.25, 1] }}
           className="absolute inset-0"
         >
-          {/* Full-bleed background */}
-          <Image
-            src={banner.image}
-            alt={language === 'ar' ? banner.titleAr : banner.title}
-            fill
-            priority={active === 0}
-            sizes="100vw"
-            className="object-cover object-center"
-          />
+          <motion.div
+            className="absolute inset-0"
+            initial={{ scale: 1 }}
+            animate={{ scale: 1.08 }}
+            transition={{ duration: (SLIDE_DURATION + 1500) / 1000, ease: 'linear' }}
+          >
+            <Image
+              src={banner.image}
+              alt={language === 'ar' ? banner.titleAr : banner.title}
+              fill
+              priority={active === 0}
+              sizes="100vw"
+              className="object-cover object-center"
+            />
+          </motion.div>
 
           {/* Multi-layer overlay for depth */}
           <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/30 to-black/10" />
@@ -90,65 +110,82 @@ export default function HeroCarousel({ banners }: HeroCarouselProps) {
         </motion.div>
       </AnimatePresence>
 
-      {/* Slide content */}
-      <div
-        className={`absolute inset-0 flex items-center z-10 ${isRTL ? 'justify-end' : 'justify-start'}`}
+      {/* Swipe layer — captures horizontal drags on touch devices */}
+      <motion.div
+        className="absolute inset-0 z-10"
+        drag="x"
+        dragConstraints={{ left: 0, right: 0 }}
+        dragElastic={0.12}
+        onDragEnd={handleDragEnd}
       >
-        <div className={`px-10 sm:px-16 lg:px-24 max-w-3xl ${isRTL ? 'text-right' : 'text-left'}`}>
-          <AnimatePresence mode="wait" custom={direction}>
-            <motion.div
-              key={`content-${active}`}
-              custom={direction}
-              variants={contentVariants}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.1 }}
-            >
-              {/* Overline label */}
-              <div className={`flex items-center gap-3 mb-5 ${isRTL ? 'flex-row-reverse' : ''}`}>
-                <div className="w-12 h-px bg-[#C9A84C]" />
-                <span className="text-[#C9A84C] text-[11px] font-black tracking-[0.4em] uppercase">
-                  RAF · Luxury Collection
-                </span>
-              </div>
-
-              {/* Headline */}
-              <h1
-                className="font-serif font-bold text-white leading-[1.05] mb-6"
-                style={{ fontSize: 'clamp(2.4rem, 5.5vw, 4.2rem)' }}
+        {/* Slide content */}
+        <div
+          className={`absolute inset-0 flex items-center ${isRTL ? 'justify-end' : 'justify-start'}`}
+        >
+          <div className={`px-8 sm:px-16 lg:px-24 max-w-3xl ${isRTL ? 'text-right' : 'text-left'}`}>
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={`content-${active}`}
+                variants={contentContainer}
+                initial="enter"
+                animate="center"
+                exit="exit"
               >
-                {language === 'ar' ? banner.titleAr : banner.title}
-              </h1>
-
-              {/* Subtitle */}
-              <p className="text-white/70 text-base sm:text-lg leading-relaxed mb-10 max-w-lg font-light">
-                {language === 'ar' ? banner.subtitleAr : banner.subtitle}
-              </p>
-
-              {/* CTA buttons */}
-              <div className={`flex flex-wrap items-center gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
-                <Link
-                  href={banner.ctaLink}
-                  className="group inline-flex items-center gap-3 bg-[#C9A84C] text-[#2D1F1F] px-8 py-4 text-[11px] font-black tracking-[0.25em] uppercase hover:bg-white transition-all duration-300"
+                {/* Overline label */}
+                <motion.div
+                  variants={contentItem}
+                  className={`flex items-center gap-3 mb-5 ${isRTL ? 'flex-row-reverse' : ''}`}
                 >
-                  {language === 'ar' ? banner.ctaAr : banner.cta}
-                  <ChevronRight
-                    size={14}
-                    className={`transition-transform duration-300 group-hover:translate-x-1 ${isRTL ? 'rotate-180' : ''}`}
-                  />
-                </Link>
-                <Link
-                  href="/products"
-                  className="inline-flex items-center gap-2 text-white/80 text-[11px] font-semibold tracking-[0.2em] uppercase border-b border-white/30 pb-0.5 hover:text-[#C9A84C] hover:border-[#C9A84C] transition-all duration-300"
+                  <div className="w-12 h-px bg-[#C9A84C]" />
+                  <span className="text-[#C9A84C] text-[11px] font-black tracking-[0.4em] uppercase">
+                    RAF · Luxury Collection
+                  </span>
+                </motion.div>
+
+                {/* Headline */}
+                <motion.h1
+                  variants={contentItem}
+                  className="font-serif font-bold text-white leading-[1.05] mb-6"
+                  style={{ fontSize: 'clamp(2.4rem, 5.5vw, 4.2rem)' }}
                 >
-                  {language === 'ar' ? 'كل المنتجات' : 'View All'}
-                </Link>
-              </div>
-            </motion.div>
-          </AnimatePresence>
+                  {language === 'ar' ? banner.titleAr : banner.title}
+                </motion.h1>
+
+                {/* Subtitle */}
+                <motion.p
+                  variants={contentItem}
+                  className="text-white/70 text-base sm:text-lg leading-relaxed mb-10 max-w-lg font-light"
+                >
+                  {language === 'ar' ? banner.subtitleAr : banner.subtitle}
+                </motion.p>
+
+                {/* CTA buttons */}
+                <motion.div
+                  variants={contentItem}
+                  className={`flex flex-wrap items-center gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}
+                >
+                  <Link
+                    href={banner.ctaLink}
+                    className="group inline-flex items-center gap-3 bg-[#C9A84C] text-[#2D1F1F] px-8 py-4 text-[11px] font-black tracking-[0.25em] uppercase hover:bg-white transition-all duration-300"
+                  >
+                    {language === 'ar' ? banner.ctaAr : banner.cta}
+                    <ChevronRight
+                      size={14}
+                      className={`transition-transform duration-300 group-hover:translate-x-1 ${isRTL ? 'rotate-180' : ''}`}
+                    />
+                  </Link>
+                  <Link
+                    href="/products"
+                    className="inline-flex items-center gap-2 text-white/80 text-[11px] font-semibold tracking-[0.2em] uppercase border-b border-white/30 pb-0.5 hover:text-[#C9A84C] hover:border-[#C9A84C] transition-all duration-300"
+                  >
+                    {language === 'ar' ? 'كل المنتجات' : 'View All'}
+                  </Link>
+                </motion.div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Slide counter — top right */}
       <div className="absolute top-6 right-8 z-20 flex items-center gap-2">
@@ -157,10 +194,10 @@ export default function HeroCarousel({ banners }: HeroCarouselProps) {
         <span className="text-white/40 text-sm font-light">0{banners.length}</span>
       </div>
 
-      {/* Navigation arrows — minimal, vertical center */}
+      {/* Navigation arrows — desktop only; mobile swipes */}
       <button
         onClick={prev}
-        className={`absolute top-1/2 -translate-y-1/2 z-20 w-12 h-12 border border-white/25 text-white flex items-center justify-center hover:bg-white/10 hover:border-[#C9A84C] hover:text-[#C9A84C] transition-all duration-300 group ${
+        className={`hidden sm:flex absolute top-1/2 -translate-y-1/2 z-20 w-12 h-12 border border-white/25 text-white items-center justify-center hover:bg-white/10 hover:border-[#C9A84C] hover:text-[#C9A84C] transition-all duration-300 ${
           isRTL ? 'right-6' : 'left-6'
         }`}
         aria-label="Previous"
@@ -169,7 +206,7 @@ export default function HeroCarousel({ banners }: HeroCarouselProps) {
       </button>
       <button
         onClick={next}
-        className={`absolute top-1/2 -translate-y-1/2 z-20 w-12 h-12 border border-white/25 text-white flex items-center justify-center hover:bg-white/10 hover:border-[#C9A84C] hover:text-[#C9A84C] transition-all duration-300 group ${
+        className={`hidden sm:flex absolute top-1/2 -translate-y-1/2 z-20 w-12 h-12 border border-white/25 text-white items-center justify-center hover:bg-white/10 hover:border-[#C9A84C] hover:text-[#C9A84C] transition-all duration-300 ${
           isRTL ? 'left-6' : 'right-6'
         }`}
         aria-label="Next"
@@ -200,7 +237,7 @@ export default function HeroCarousel({ banners }: HeroCarouselProps) {
           className="absolute bottom-0 left-0 h-[2px] bg-[#C9A84C]/60 z-20"
           initial={{ width: '0%' }}
           animate={{ width: '100%' }}
-          transition={{ duration: 6, ease: 'linear' }}
+          transition={{ duration: SLIDE_DURATION / 1000, ease: 'linear' }}
         />
       )}
     </div>
