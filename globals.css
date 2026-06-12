@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
-@source "../components/**/*.{js,ts,jsx,tsx}";
-@source "./**/*.{js,ts,jsx,tsx}";
-@source "../contexts/**/*.{js,ts,jsx,tsx}";
+@source "./components/**/*.{js,ts,jsx,tsx}";
+@source "./app/**/*.{js,ts,jsx,tsx}";
+@source "./contexts/**/*.{js,ts,jsx,tsx}";
 
 @theme {
   /* Gold palette */
