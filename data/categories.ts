@@ -1,0 +1,58 @@
+import { Category } from '@/types';
+
+export const categories: Category[] = [
+  {
+    id: 'c1',
+    name: 'Fragrances',
+    nameAr: 'العطور',
+    image: 'https://picsum.photos/seed/cat-fragrances/600/800',
+    icon: '🌸',
+    productCount: 45,
+    featured: true,
+  },
+  {
+    id: 'c2',
+    name: 'Fashion',
+    nameAr: 'الأزياء',
+    image: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=600&h=800&fit=crop&q=85',
+    icon: '👘',
+    productCount: 62,
+    featured: true,
+  },
+  {
+    id: 'c3',
+    name: 'Home & Living',
+    nameAr: 'المنزل والمعيشة',
+    image: 'https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=600&h=800&fit=crop&q=85',
+    icon: '🏠',
+    productCount: 38,
+    featured: true,
+  },
+  {
+    id: 'c4',
+    name: 'Food & Gourmet',
+    nameAr: 'الأغذية والمأكولات الفاخرة',
+    image: 'https://picsum.photos/seed/cat-food-gourmet/600/800',
+    icon: '🍯',
+    productCount: 54,
+    featured: true,
+  },
+  {
+    id: 'c5',
+    name: 'Traditional Crafts',
+    nameAr: 'الحرف التقليدية',
+    image: 'https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=600&h=800&fit=crop&q=85',
+    icon: '🗡️',
+    productCount: 29,
+    featured: true,
+  },
+  {
+    id: 'c6',
+    name: 'Skincare',
+    nameAr: 'العناية بالبشرة',
+    image: 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=600&h=800&fit=crop&q=85',
+    icon: '✨',
+    productCount: 41,
+    featured: true,
+  },
+];
