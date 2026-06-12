@@ -1,72 +1,6 @@
-@import "tailwindcss";
-
-@source "./components/**/*.{js,ts,jsx,tsx}";
-@source "./app/**/*.{js,ts,jsx,tsx}";
-@source "./contexts/**/*.{js,ts,jsx,tsx}";
-
-@theme {
-  /* Gold palette */
-  --color-gold-50: #fdf9ef;
-  --color-gold-100: #f9f0d6;
-  --color-gold-200: #f1ddab;
-  --color-gold-300: #e8c476;
-  --color-gold-400: #dea943;
-  --color-gold-500: #C9A84C;
-  --color-gold-600: #b08a30;
-  --color-gold-700: #8d6a26;
-  --color-gold-800: #745526;
-  --color-gold-900: #604624;
-  --color-gold-950: #362410;
-
-  /* Brown palette */
-  --color-brown-50: #fdf6f3;
-  --color-brown-100: #f9ece5;
-  --color-brown-200: #f2d5c8;
-  --color-brown-300: #e8b49f;
-  --color-brown-400: #d98b6f;
-  --color-brown-500: #cc6b48;
-  --color-brown-600: #be5335;
-  --color-brown-700: #9e412a;
-  --color-brown-800: #823727;
-  --color-brown-900: #6c3124;
-  --color-brown: #2D1F1F;
-  --color-brown-dark: #1a1010;
-
-  /* Cream palette */
-  --color-cream: #FAF7F2;
-  --color-cream-dark: #F5F0E8;
-  --color-cream-darker: #EDE5D5;
-
-  /* Oman flag colors */
-  --color-oman-red: #DB1B1B;
-  --color-oman-green: #008000;
-  --color-oman-white: #FFFFFF;
-
-  /* Fonts — override Tailwind defaults */
-  --font-sans: var(--font-inter), system-ui, sans-serif;
-  --font-serif: var(--font-playfair), Georgia, serif;
-  --font-arabic: var(--font-cairo), Arial, sans-serif;
-
-  /* Shadows */
-  --shadow-product: 0 4px 20px rgba(0, 0, 0, 0.08);
-  --shadow-product-hover: 0 8px 30px rgba(0, 0, 0, 0.12);
-  --shadow-header: 0 2px 20px rgba(0, 0, 0, 0.06);
-  --shadow-modal: 0 25px 50px rgba(0, 0, 0, 0.25);
-  --shadow-gold: 0 4px 14px rgba(201, 168, 76, 0.4);
-
-  /* Animations */
-  --animate-fade-in: fadeIn 0.5s ease-out;
-  --animate-slide-up: slideUp 0.4s ease-out;
-  --animate-slide-down: slideDown 0.3s ease-out;
-  --animate-slide-in-right: slideInRight 0.3s ease-out;
-  --animate-slide-in-left: slideInLeft 0.3s ease-out;
-  --animate-scale-in: scaleIn 0.2s ease-out;
-  --animate-shimmer: shimmer 1.5s infinite;
-  --animate-pulse-soft: pulseSoft 2s infinite;
-
-  /* Easing */
-  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
   --font-inter: 'Inter', system-ui, sans-serif;
@@ -137,36 +71,6 @@ body {
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes slideUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes slideDown {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes slideInRight {
-  from { opacity: 0; transform: translateX(100%); }
-  to { opacity: 1; transform: translateX(0); }
-}
-
-@keyframes slideInLeft {
-  from { opacity: 0; transform: translateX(-100%); }
-  to { opacity: 1; transform: translateX(0); }
-}
-
-@keyframes scaleIn {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
-}
-
-@keyframes pulseSoft {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.7; }
 }
 
 @keyframes cartPulse {
