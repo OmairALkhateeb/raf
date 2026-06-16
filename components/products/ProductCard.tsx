@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { Heart, ShoppingBag, Eye, Star } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Product } from '@/types';
+import { getBrandBySlug } from '@/data/brands';
 import { useCart } from '@/contexts/CartContext';
 import { useWishlist } from '@/contexts/WishlistContext';
 import { useApp } from '@/contexts/AppContext';
@@ -29,6 +30,7 @@ export default function ProductCard({ product, onQuickView }: ProductCardProps) 
   const inCart = isInCart(product.id);
   const name = language === 'ar' ? product.nameAr : product.name;
   const brand = language === 'ar' ? product.brandAr : product.brand;
+  const brandSlug = getBrandBySlug(product.brandId)?.slug ?? product.brandId;
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -176,10 +178,13 @@ export default function ProductCard({ product, onQuickView }: ProductCardProps) 
 
       {/* ── Info Panel ── */}
       <div className={`pt-4 pb-2 flex flex-col gap-1 ${isRTL ? 'text-right' : 'text-left'}`}>
-        {/* Brand */}
-        <p className="text-[10px] font-black tracking-[0.28em] uppercase text-[#C9A84C] truncate leading-none">
+        {/* Brand — links to the brand's filtered listing */}
+        <Link
+          href={`/products?brand=${brandSlug}`}
+          className="text-[10px] font-black tracking-[0.28em] uppercase text-[#C9A84C] truncate leading-none hover:text-[#2D1F1F] transition-colors w-fit"
+        >
           {brand}
-        </p>
+        </Link>
 
         {/* Name */}
         <Link href={`/products/${product.id}`} onClick={() => addToRecentlyViewed(product)}>

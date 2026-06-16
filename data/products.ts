@@ -1,11 +1,16 @@
-import { Product } from '@/types';
+import { Product, AttributeValue } from '@/types';
+import { attributePools } from './filters';
+import { flickr, productImageKeywords } from '@/utils/mockImage';
 
 // All images use picsum.photos — consistent, beautiful, no wrong content.
 // Seed = unique per product slot → always the same photo for that product.
 const p = (seed: string, w = 800, h = 1000) =>
   `https://picsum.photos/seed/${seed}/${w}/${h}`;
 
-export const products: Product[] = [
+// `rawProducts` holds the authored catalog. The exported `products` below is the
+// same list augmented with a `slug`, a `subCategoryId`, and dynamic `attributes`
+// (skin_type, gender, size, …) so mock filtering behaves like the real backend.
+const rawProducts: Product[] = [
   {
     id: 'p1',
     name: 'Amouage Gold Man Eau de Parfum',
@@ -698,7 +703,129 @@ export const products: Product[] = [
   },
 ];
 
+/* ──────────────────────────────────────────────────────────────────────────
+   Mock augmentation: derive slug + subCategoryId + dynamic attributes.
+   This is the temporary mock source for sub-category navigation and dynamic
+   filters. The real backend will already include these fields, so the rest of
+   the app reads them directly off the product and needs no change on bind.
+   ────────────────────────────────────────────────────────────────────────── */
+
+const slugify = (s: string): string =>
+  s.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+
+const hashIndex = (s: string, n: number): number => {
+  let h = 0;
+  for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0;
+  return n > 0 ? h % n : 0;
+};
+const pick = <T,>(seed: string, arr: readonly T[]): T => arr[hashIndex(seed, arr.length)];
+const pickMany = <T,>(seed: string, arr: readonly T[], k: number): T[] => {
+  const start = hashIndex(seed, arr.length);
+  const out: T[] = [];
+  for (let i = 0; i < Math.min(k, arr.length); i++) out.push(arr[(start + i) % arr.length]);
+  return Array.from(new Set(out));
+};
+
+const hasTag = (prod: Product, ...keys: string[]): boolean => {
+  const tags = prod.tags.map(t => t.toLowerCase());
+  return keys.some(k => tags.includes(k));
+};
+
+const sizeFromSpecs = (prod: Product): number | undefined => {
+  const spec = prod.specifications.find(s => /volume|حجم/i.test(s.key) || /volume|حجم/i.test(s.keyAr));
+  if (!spec) return undefined;
+  const m = String(spec.value).match(/\d+/);
+  return m ? Number(m[0]) : undefined;
+};
+
+const concentrationFromSpecs = (prod: Product): string | undefined => {
+  const spec = prod.specifications.find(s => /concentration|التركيز/i.test(s.key) || /التركيز/i.test(s.keyAr));
+  const val = (spec?.value ?? '').toLowerCase();
+  if (!val) return undefined;
+  if (val.includes('eau de parfum')) return 'edp';
+  if (val.includes('eau de toilette')) return 'edt';
+  if (val.includes('oil')) return 'oil';
+  if (val.includes('parfum')) return 'parfum';
+  return undefined;
+};
+
+const pickSubCategory = (prod: Product): string | undefined => {
+  switch (prod.categoryId) {
+    case 'c1':
+      if (hasTag(prod, 'oud', 'bukhoor', 'incense')) return 'sc-frag-oud';
+      if (hasTag(prod, 'women', 'woman', 'her')) return 'sc-frag-women';
+      if (hasTag(prod, 'men', 'man', 'him')) return 'sc-frag-men';
+      return pick(prod.id, ['sc-frag-women', 'sc-frag-men', 'sc-frag-oud']);
+    case 'c2':
+      if (hasTag(prod, 'women', 'woman')) return 'sc-fash-women';
+      if (hasTag(prod, 'men', 'man')) return 'sc-fash-men';
+      if (hasTag(prod, 'accessory', 'accessories', 'jewelry', 'jewellery', 'bag')) return 'sc-fash-acc';
+      return pick(prod.id, ['sc-fash-women', 'sc-fash-men', 'sc-fash-acc']);
+    case 'c3':
+      if (hasTag(prod, 'textile', 'textiles', 'rug', 'cushion', 'fabric')) return 'sc-home-textiles';
+      return pick(prod.id, ['sc-home-decor', 'sc-home-textiles']);
+    case 'c4':
+      if (hasTag(prod, 'honey')) return 'sc-food-honey';
+      if (hasTag(prod, 'dates', 'date')) return 'sc-food-dates';
+      if (hasTag(prod, 'sweets', 'sweet', 'halwa', 'dessert')) return 'sc-food-sweets';
+      return pick(prod.id, ['sc-food-honey', 'sc-food-dates', 'sc-food-sweets']);
+    case 'c5':
+      if (hasTag(prod, 'silver', 'khanjar', 'jewelry')) return 'sc-craft-silver';
+      if (hasTag(prod, 'pottery', 'clay', 'ceramic')) return 'sc-craft-pottery';
+      return pick(prod.id, ['sc-craft-silver', 'sc-craft-pottery']);
+    case 'c6':
+      if (hasTag(prod, 'hair')) return 'sc-hair-care';
+      if (hasTag(prod, 'body')) return 'sc-body-care';
+      return 'sc-face-care';
+    default:
+      return undefined;
+  }
+};
+
+const buildAttributes = (prod: Product, subId: string | undefined): Record<string, AttributeValue> => {
+  const attrs: Record<string, AttributeValue> = {};
+  const size = sizeFromSpecs(prod);
+  if (subId === 'sc-frag-women' || subId === 'sc-frag-men' || subId === 'sc-frag-oud') {
+    attrs.gender = subId === 'sc-frag-women' ? 'women' : subId === 'sc-frag-men' ? 'men' : 'unisex';
+    attrs.concentration = concentrationFromSpecs(prod) ?? pick(prod.id, attributePools.concentration);
+    attrs.fragrance_family = pick(prod.id + 'f', attributePools.fragrance_family);
+    attrs.size = size ?? pick(prod.id + 's', [30, 50, 75, 100, 125]);
+  } else if (subId === 'sc-face-care' || subId === 'sc-body-care') {
+    attrs.skin_type = pickMany(prod.id, attributePools.skin_type, 2);
+    attrs.skin_concern = pickMany(prod.id + 'c', attributePools.skin_concern, 2);
+    attrs.product_function = pickMany(prod.id + 'fn', attributePools.product_function, 2);
+    attrs.product_type = pick(prod.id + 'pt', attributePools.product_type);
+    if (subId === 'sc-face-care') attrs.spf = pick(prod.id + 'spf', attributePools.spf);
+    attrs.usage = pick(prod.id, attributePools.usage);
+    attrs.gender = pick(prod.id + 'g', attributePools.gender);
+    attrs.size = size ?? pick(prod.id + 's', [30, 50, 100, 200, 250]);
+  } else if (subId === 'sc-hair-care') {
+    attrs.hair_type = pick(prod.id, attributePools.hair_type);
+    attrs.hair_problem = pickMany(prod.id, attributePools.hair_problem, 2);
+    attrs.product_type = pick(prod.id + 'pt', attributePools.hair_product_type);
+    attrs.size = size ?? pick(prod.id + 's', [100, 200, 250, 400]);
+  }
+  return attrs;
+};
+
+export const products: Product[] = rawProducts.map(prod => {
+  const subCategoryId = pickSubCategory(prod);
+  // Replace random placeholder photos with topic-relevant, stable imagery.
+  const kw = productImageKeywords(prod.categoryId, subCategoryId);
+  return {
+    ...prod,
+    slug: prod.slug ?? slugify(prod.name),
+    subCategoryId,
+    images: [flickr(kw, prod.id + 'a', 800, 1000), flickr(kw, prod.id + 'b', 800, 1000)],
+    attributes: { ...buildAttributes(prod, subCategoryId), ...(prod.attributes ?? {}) },
+  };
+});
+
 export const getProductById = (id: string): Product | undefined => products.find(p => p.id === id);
+export const getProductBySlug = (slug: string): Product | undefined =>
+  products.find(p => p.slug === slug) ?? products.find(p => p.id === slug);
+export const getProductsBySubCategory = (subCategoryId: string): Product[] =>
+  products.filter(p => p.subCategoryId === subCategoryId);
 export const getProductsByCategory = (categoryId: string): Product[] => products.filter(p => p.categoryId === categoryId);
 export const getProductsByBrand = (brandId: string): Product[] => products.filter(p => p.brandId === brandId);
 export const getFeaturedProducts = (): Product[] => products.filter(p => p.isFeatured);

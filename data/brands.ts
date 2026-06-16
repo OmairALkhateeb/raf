@@ -5,6 +5,7 @@ const logo = (seed: string) => `https://picsum.photos/seed/${seed}/200/200`;
 export const brands: Brand[] = [
   {
     id: 'b1',
+    slug: 'amouage',
     name: 'Amouage',
     nameAr: 'أموآج',
     logo: logo('brand-amouage'),
@@ -16,6 +17,7 @@ export const brands: Brand[] = [
   },
   {
     id: 'b2',
+    slug: 'naseem',
     name: 'Naseem',
     nameAr: 'نسيم',
     logo: logo('brand-naseem'),
@@ -27,6 +29,7 @@ export const brands: Brand[] = [
   },
   {
     id: 'b3',
+    slug: 'zawaya',
     name: 'Zawaya',
     nameAr: 'زوايا',
     logo: logo('brand-zawaya'),
@@ -38,6 +41,7 @@ export const brands: Brand[] = [
   },
   {
     id: 'b4',
+    slug: 'bahla-crafts',
     name: 'Bahla Crafts',
     nameAr: 'حرف بهلاء',
     logo: logo('brand-bahla'),
@@ -49,6 +53,7 @@ export const brands: Brand[] = [
   },
   {
     id: 'b5',
+    slug: 'al-shurooq',
     name: 'Al Shurooq',
     nameAr: 'الشروق',
     logo: logo('brand-alshurooq'),
@@ -60,6 +65,7 @@ export const brands: Brand[] = [
   },
   {
     id: 'b6',
+    slug: 'dhofar-resins',
     name: 'Dhofar Resins',
     nameAr: 'راتنجات ظفار',
     logo: logo('brand-dhofar'),
@@ -71,6 +77,7 @@ export const brands: Brand[] = [
   },
   {
     id: 'b7',
+    slug: 'al-khanjari',
     name: 'Al Khanjari',
     nameAr: 'الخنجري',
     logo: logo('brand-khanjari'),
@@ -82,6 +89,7 @@ export const brands: Brand[] = [
   },
   {
     id: 'b8',
+    slug: 'mazoon',
     name: 'Mazoon',
     nameAr: 'مزون',
     logo: logo('brand-mazoon'),
@@ -93,6 +101,7 @@ export const brands: Brand[] = [
   },
   {
     id: 'b9',
+    slug: 'baraka',
     name: 'Baraka',
     nameAr: 'بركة',
     logo: logo('brand-baraka'),
@@ -105,3 +114,5 @@ export const brands: Brand[] = [
 ];
 
 export const getFeaturedBrands = (): Brand[] => brands.filter(b => b.featured);
+export const getBrandBySlug = (slug: string): Brand | undefined =>
+  brands.find(b => b.slug === slug) ?? brands.find(b => b.id === slug);

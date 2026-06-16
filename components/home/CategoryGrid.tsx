@@ -48,7 +48,7 @@ export default function CategoryGrid({ categories }: CategoryGridProps) {
               transition={{ delay: i * 0.08, duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
             >
               <Link
-                href={`/products?category=${cat.id}`}
+                href={`/products?category=${cat.slug}`}
                 className="group block"
               >
                 {/* Image block */}
@@ -69,7 +69,6 @@ export default function CategoryGrid({ categories }: CategoryGridProps) {
 
                   {/* Icon + count at bottom */}
                   <div className="absolute inset-x-0 bottom-0 p-4 flex flex-col items-center gap-1">
-                    <span className="text-2xl mb-1">{cat.icon}</span>
                     <span className="text-[10px] text-white/60 font-medium tracking-widest uppercase">
                       {cat.productCount}+ {language === 'ar' ? 'منتج' : 'items'}
                     </span>

@@ -9,7 +9,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Breadcrumb from '@/components/common/Breadcrumb';
 import Rating from '@/components/common/Rating';
 import FeaturedProducts from '@/components/home/FeaturedProducts';
-import { getProductById, getProductsByCategory } from '@/data/products';
+import { getProductBySlug, getProductsByCategory } from '@/data/products';
+import { categories } from '@/data/categories';
+import { getBrandBySlug } from '@/data/brands';
 import { getReviewsByProductId } from '@/data/reviews';
 import { useCart } from '@/contexts/CartContext';
 import { useWishlist } from '@/contexts/WishlistContext';
@@ -20,7 +22,7 @@ const cx = 'max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16';
 
 export default function ProductDetailPage() {
   const { id } = useParams<{ id: string }>();
-  const product = getProductById(id);
+  const product = getProductBySlug(id);
 
   const [activeImg, setActiveImg] = useState(0);
   const [quantity, setQuantity] = useState(1);
@@ -45,6 +47,8 @@ export default function ProductDetailPage() {
   const inWishlist = isInWishlist(product.id);
   const reviews = getReviewsByProductId(product.id);
   const related = getProductsByCategory(product.categoryId).filter(p => p.id !== product.id).slice(0, 5);
+  const categorySlug = categories.find(c => c.id === product.categoryId)?.slug ?? product.categoryId;
+  const brandSlug = getBrandBySlug(product.brandId)?.slug ?? product.brandId;
 
   const handleAddToCart = () => {
     addToCart(product, quantity, selectedColor, selectedSize);
@@ -54,7 +58,7 @@ export default function ProductDetailPage() {
   const breadcrumbs = [
     { label: language === 'ar' ? 'الرئيسية' : 'Home', href: '/' },
     { label: language === 'ar' ? 'المنتجات' : 'Products', href: '/products' },
-    { label: language === 'ar' ? (product.categoryAr || product.category) : product.category, href: `/products?category=${product.categoryId}` },
+    { label: language === 'ar' ? (product.categoryAr || product.category) : product.category, href: `/products?category=${categorySlug}` },
     { label: name },
   ];
 
@@ -158,8 +162,13 @@ export default function ProductDetailPage() {
 
           {/* Product info */}
           <div>
-            {/* Brand */}
-            <p className="text-[11px] font-black tracking-[0.3em] uppercase text-[#C9A84C] mb-3">{brand}</p>
+            {/* Brand — clickable, routes to the brand's products */}
+            <Link
+              href={`/products?brand=${brandSlug}`}
+              className="inline-block text-[11px] font-black tracking-[0.3em] uppercase text-[#C9A84C] mb-3 hover:text-[#2D1F1F] transition-colors"
+            >
+              {brand}
+            </Link>
 
             {/* Name */}
             <h1 className="text-2xl sm:text-3xl lg:text-4xl font-serif text-[#2D1F1F] leading-tight mb-4">{name}</h1>
@@ -435,7 +444,7 @@ export default function ProductDetailPage() {
             products={related}
             label={language === 'en' ? 'From the Same Collection' : 'من نفس المجموعة'}
             title={t.product.relatedProducts}
-            viewAllHref={`/products?category=${product.categoryId}`}
+            viewAllHref={`/products?category=${categorySlug}`}
           />
         </div>
       )}

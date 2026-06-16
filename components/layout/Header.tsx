@@ -6,11 +6,11 @@ import { useRouter } from 'next/navigation';
 import { ShoppingBag, Heart, User, Menu, Search, X, Globe } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Logo from '@/components/common/Logo';
+import MegaMenu from '@/components/layout/MegaMenu';
 import { useCart } from '@/contexts/CartContext';
 import { useWishlist } from '@/contexts/WishlistContext';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useApp } from '@/contexts/AppContext';
-import { categories } from '@/data/categories';
 import { products } from '@/data/products';
 
 export default function Header() {
@@ -87,19 +87,8 @@ export default function Header() {
               <Logo size="md" />
             </div>
 
-            {/* Center nav — desktop */}
-            <nav className="hidden lg:flex items-center gap-8 flex-1 justify-center">
-              {categories.map(cat => (
-                <Link
-                  key={cat.id}
-                  href={`/products?category=${cat.id}`}
-                  className="text-[11px] font-semibold tracking-[0.15em] uppercase text-[#2D1F1F]/70 hover:text-[#C9A84C] transition-colors duration-200 whitespace-nowrap relative group"
-                >
-                  {language === 'ar' ? cat.nameAr : cat.name}
-                  <span className="absolute -bottom-0.5 left-0 right-0 h-px bg-[#C9A84C] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
-                </Link>
-              ))}
-            </nav>
+            {/* Center nav — desktop mega menu */}
+            <MegaMenu />
 
             {/* Right icons */}
             <div className="flex items-center gap-3">

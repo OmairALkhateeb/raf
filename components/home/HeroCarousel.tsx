@@ -7,6 +7,8 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence, type PanInfo, type Variants } from 'framer-motion';
 import { Banner } from '@/types';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { bannerHref } from '@/utils/bannerLink';
+import { trackBannerClick } from '@/lib/api/banners';
 
 interface HeroCarouselProps {
   banners: Banner[];
@@ -88,7 +90,7 @@ export default function HeroCarousel({ banners }: HeroCarouselProps) {
             transition={{ duration: (SLIDE_DURATION + 1500) / 1000, ease: 'linear' }}
           >
             <Image
-              src={banner.image}
+              src={banner.imageDesktop}
               alt={language === 'ar' ? banner.titleAr : banner.title}
               fill
               priority={active === 0}
@@ -165,10 +167,11 @@ export default function HeroCarousel({ banners }: HeroCarouselProps) {
                   className={`flex flex-wrap items-center gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}
                 >
                   <Link
-                    href={banner.ctaLink}
+                    href={bannerHref(banner)}
+                    onClick={() => trackBannerClick(banner.id)}
                     className="group inline-flex items-center gap-3 bg-[#C9A84C] text-[#2D1F1F] px-8 py-4 text-[11px] font-black tracking-[0.25em] uppercase hover:bg-white transition-all duration-300"
                   >
-                    {language === 'ar' ? banner.ctaAr : banner.cta}
+                    {language === 'ar' ? banner.buttonTextAr : banner.buttonText}
                     <ChevronRight
                       size={14}
                       className={`transition-transform duration-300 group-hover:translate-x-1 ${isRTL ? 'rotate-180' : ''}`}

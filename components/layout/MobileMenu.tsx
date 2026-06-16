@@ -1,8 +1,8 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { X, ChevronRight, Home, ShoppingBag, Heart, User, Globe, Tag } from 'lucide-react';
+import { X, ChevronRight, ChevronDown, Home, ShoppingBag, Heart, User, Globe, Tag } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Logo from '@/components/common/Logo';
 import { useApp } from '@/contexts/AppContext';
@@ -16,6 +16,7 @@ export default function MobileMenu() {
   const { language, setLanguage, t, isRTL } = useLanguage();
   const { itemCount } = useCart();
   const { count: wishlistCount } = useWishlist();
+  const [expanded, setExpanded] = useState<string | null>(null);
 
   useEffect(() => {
     if (isMobileMenuOpen) {
@@ -96,19 +97,48 @@ export default function MobileMenu() {
                 </p>
               </div>
 
-              {categories.map(cat => (
-                <Link
-                  key={cat.id}
-                  href={`/products?category=${cat.id}`}
-                  onClick={close}
-                  className="flex items-center gap-3 px-4 py-2.5 hover:bg-cream-dark transition-colors"
-                >
-                  <span className="text-base">{cat.icon}</span>
-                  <span className="text-sm text-gray-700">
-                    {language === 'ar' ? cat.nameAr : cat.name}
-                  </span>
-                </Link>
-              ))}
+              {categories.map(cat => {
+                const subs = cat.subCategories ?? [];
+                const isExp = expanded === cat.id;
+                return (
+                  <div key={cat.id} className="border-b border-cream-darker/40">
+                    <div className="flex items-center">
+                      <Link
+                        href={`/products?category=${cat.slug}`}
+                        onClick={close}
+                        className="flex items-center gap-3 px-4 py-2.5 flex-1 hover:bg-cream-dark transition-colors"
+                      >
+                        <span className="text-sm text-gray-700">
+                          {language === 'ar' ? cat.nameAr : cat.name}
+                        </span>
+                      </Link>
+                      {subs.length > 0 && (
+                        <button
+                          onClick={() => setExpanded(isExp ? null : cat.id)}
+                          className="px-4 py-2.5 text-gray-400 hover:text-[#C9A84C]"
+                          aria-label="Toggle sub-categories"
+                        >
+                          <ChevronDown size={16} className={`transition-transform ${isExp ? 'rotate-180' : ''}`} />
+                        </button>
+                      )}
+                    </div>
+                    {isExp && subs.length > 0 && (
+                      <div className={`pb-2 ${isRTL ? 'pr-12' : 'pl-12'}`}>
+                        {subs.map(sub => (
+                          <Link
+                            key={sub.id}
+                            href={`/products?category=${cat.slug}&subCategory=${sub.slug}`}
+                            onClick={close}
+                            className="block py-1.5 text-[13px] text-gray-500 hover:text-[#C9A84C] transition-colors"
+                          >
+                            {language === 'ar' ? sub.nameAr : sub.name}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
             </div>
 
             {/* Footer */}

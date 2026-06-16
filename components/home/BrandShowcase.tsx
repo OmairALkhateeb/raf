@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Brand } from '@/types';
@@ -48,18 +47,14 @@ export default function BrandShowcase({ brands }: BrandShowcaseProps) {
               transition={{ delay: i * 0.06, duration: 0.5 }}
             >
               <Link
-                href={`/products?brand=${brand.id}`}
+                href={`/products?brand=${brand.slug}`}
                 className="group flex flex-col items-center gap-4 p-6 bg-[#1A1210] hover:bg-[#231815] transition-colors duration-300 border border-transparent hover:border-[#C9A84C]/20"
               >
-                {/* Logo image */}
-                <div className="relative w-14 h-14 sm:w-16 sm:h-16 overflow-hidden bg-white/8 flex items-center justify-center ring-1 ring-white/10 group-hover:ring-[#C9A84C]/40 transition-all duration-300">
-                  <Image
-                    src={brand.logo}
-                    alt={language === 'ar' ? brand.nameAr : brand.name}
-                    fill
-                    sizes="64px"
-                    className="object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-300"
-                  />
+                {/* Monogram (no real logo asset in mock mode) */}
+                <div className="w-14 h-14 sm:w-16 sm:h-16 bg-white/8 flex items-center justify-center ring-1 ring-white/10 group-hover:ring-[#C9A84C]/40 transition-all duration-300">
+                  <span className="font-serif text-2xl text-[#C9A84C]">
+                    {(language === 'ar' ? brand.nameAr : brand.name).charAt(0)}
+                  </span>
                 </div>
 
                 {/* Brand name */}

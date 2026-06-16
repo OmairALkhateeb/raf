@@ -3,38 +3,41 @@ import HeroCarousel from '@/components/home/HeroCarousel';
 import CategoryGrid from '@/components/home/CategoryGrid';
 import FeaturedProducts from '@/components/home/FeaturedProducts';
 import BrandShowcase from '@/components/home/BrandShowcase';
+import BannerSection from '@/components/home/BannerSection';
 import PromoBanner from '@/components/home/PromoBanner';
-import { banners } from '@/data/banners';
+import { getBanners } from '@/lib/api/banners';
 import { categories } from '@/data/categories';
-import { getFeaturedProducts, getBestsellerProducts, getNewProducts } from '@/data/products';
+import { getBestsellerProducts } from '@/data/products';
 import { getFeaturedBrands } from '@/data/brands';
 
 export const metadata: Metadata = {
   title: 'RAF | Authentic Omani Products — Home',
 };
 
-export default function HomePage() {
-  const featured = getFeaturedProducts();
+export default async function HomePage() {
+  // Banners are admin-managed and fetched by placement (mock now, API-ready).
+  const [heroBanners, middleBanners, bottomBanners] = await Promise.all([
+    getBanners('home_hero'),
+    getBanners('home_middle'),
+    getBanners('home_bottom'),
+  ]);
+
   const bestsellers = getBestsellerProducts();
-  const newArrivals = getNewProducts();
   const brands = getFeaturedBrands();
 
   return (
     <div>
-      <HeroCarousel banners={banners} />
+      <HeroCarousel banners={heroBanners} />
 
       <PromoBanner />
 
-      <FeaturedProducts
-        products={featured.slice(0, 10)}
-        label="Curated For You"
-        title="Featured Collection"
-        subtitle="Discover our hand-picked selection of authentic Omani luxury products"
-        viewAllHref="/products?sort=popular"
-      />
-
+      {/* Primary gateway: shop by category */}
       <CategoryGrid categories={categories} />
 
+      {/* Mid-page marketing banners (clickable → related products) */}
+      <BannerSection banners={middleBanners} />
+
+      {/* A single, focused product strip keeps the home page from feeling crowded */}
       <FeaturedProducts
         products={bestsellers.slice(0, 5)}
         label="Most Loved"
@@ -46,13 +49,7 @@ export default function HomePage() {
 
       <BrandShowcase brands={brands} />
 
-      <FeaturedProducts
-        products={newArrivals.slice(0, 5)}
-        label="Just Arrived"
-        title="New Arrivals"
-        subtitle="Fresh additions to our curated Omani collection"
-        viewAllHref="/products?sort=newest"
-      />
+      <BannerSection banners={bottomBanners} />
     </div>
   );
 }
