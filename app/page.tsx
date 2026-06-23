@@ -11,7 +11,7 @@ import { getBestsellerProducts } from '@/data/products';
 import { getFeaturedBrands } from '@/data/brands';
 
 export const metadata: Metadata = {
-  title: 'RAF | Authentic Omani Products — Home',
+  title: 'RAF | Beauty, Care, Wellness & Gifts',
 };
 
 export default async function HomePage() {

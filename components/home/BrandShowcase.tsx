@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import { ArrowRight } from 'lucide-react';
 import { Brand } from '@/types';
 import { useLanguage } from '@/contexts/LanguageContext';
 
@@ -24,7 +25,7 @@ export default function BrandShowcase({ brands }: BrandShowcaseProps) {
           className="flex flex-col items-center text-center mb-14"
         >
           <span className="text-[10px] font-black tracking-[0.45em] uppercase mb-4 text-[#C9A84C]">
-            {language === 'ar' ? 'تراث عماني أصيل' : 'Authentic Omani Heritage'}
+            {language === 'ar' ? 'متاجر العلامات' : 'Brand Stores'}
           </span>
           <div className={`flex items-center gap-5 w-full max-w-lg ${isRTL ? 'flex-row-reverse' : ''}`}>
             <div className="flex-1 h-px bg-[#C9A84C]/25" />
@@ -47,7 +48,7 @@ export default function BrandShowcase({ brands }: BrandShowcaseProps) {
               transition={{ delay: i * 0.06, duration: 0.5 }}
             >
               <Link
-                href={`/products?brand=${brand.slug}`}
+                href={`/brands/${brand.slug}`}
                 className="group flex flex-col items-center gap-4 p-6 bg-[#1A1210] hover:bg-[#231815] transition-colors duration-300 border border-transparent hover:border-[#C9A84C]/20"
               >
                 {/* Monogram (no real logo asset in mock mode) */}
@@ -66,6 +67,17 @@ export default function BrandShowcase({ brands }: BrandShowcaseProps) {
               </Link>
             </motion.div>
           ))}
+        </div>
+
+        {/* View all brands */}
+        <div className="flex justify-center mt-12">
+          <Link
+            href="/brands"
+            className="group inline-flex items-center gap-3 border border-[#C9A84C]/50 text-[#C9A84C] px-8 py-3.5 text-[11px] font-black tracking-[0.3em] uppercase hover:bg-[#C9A84C] hover:text-[#1A1210] transition-all duration-300"
+          >
+            {language === 'ar' ? 'كل العلامات التجارية' : 'All Brands'}
+            <ArrowRight size={14} className={`transition-transform duration-300 group-hover:translate-x-1 ${isRTL ? 'rotate-180' : ''}`} />
+          </Link>
         </div>
       </div>
     </section>

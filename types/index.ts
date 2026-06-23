@@ -58,16 +58,23 @@ export interface Review {
 
 export interface Brand {
   id: string;
-  /** URL-friendly identifier used in `/products?brand={slug}`. */
+  /** URL-friendly identifier used in `/brands/{slug}` and `/products?brand={slug}`. */
   slug: string;
   name: string;
   nameAr: string;
   logo: string;
+  /** Wide cover image shown on the brand mini-store page. */
+  banner?: string;
+  /** Short marketing line under the brand name. */
+  tagline?: string;
+  taglineAr?: string;
   description: string;
   descriptionAr: string;
   origin: string;
   featured: boolean;
   productCount: number;
+  /** Optional brand accent colour for light theming on the mini-store. */
+  accentColor?: string;
 }
 
 /** A sub-category belongs to a Category. Selecting one navigates to its products — it is NOT a filter. */

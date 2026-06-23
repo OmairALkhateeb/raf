@@ -95,6 +95,7 @@ export default function Footer() {
               {[
                 { href: '/', label: t.nav.home },
                 { href: '/products', label: t.nav.products },
+                { href: '/brands', label: t.nav.brands },
                 { href: '/account', label: t.nav.account },
                 { href: '/wishlist', label: t.nav.wishlist },
               ].map(link => (

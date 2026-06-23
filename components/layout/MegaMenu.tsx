@@ -8,7 +8,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Category, SubCategory } from '@/types';
 import { categories } from '@/data/categories';
 import { getFeaturedBrands } from '@/data/brands';
-import { filtersBySubCategory, filtersByCategory } from '@/data/filters';
+import { filtersBySubCategory } from '@/data/filters';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 // Nice-One-style hover mega menu (desktop). Three regions:
@@ -102,6 +102,17 @@ export default function MegaMenu() {
         </Link>
       ))}
 
+      {/* Brands — dedicated top-level destination */}
+      <Link
+        href="/brands"
+        onMouseEnter={scheduleClose}
+        onClick={() => setOpen(false)}
+        className="text-[11px] font-semibold tracking-[0.15em] uppercase transition-colors whitespace-nowrap relative group text-[#2D1F1F]/70 hover:text-[#C9A84C]"
+      >
+        {language === 'ar' ? 'العلامات' : 'Brands'}
+        <span className="absolute -bottom-0.5 left-0 right-0 h-px bg-[#C9A84C] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+      </Link>
+
       {/* ── Panel ── */}
       <AnimatePresence>
         {open && active && (
@@ -187,14 +198,19 @@ export default function MegaMenu() {
 
                 {/* Region 3 — brands + featured art */}
                 <div className="w-72 flex-shrink-0 border-s border-[#2D1F1F]/8 ps-6">
-                  <p className="text-[10px] font-black tracking-[0.3em] uppercase text-[#2D1F1F]/40 mb-3">
+                  <Link
+                    href="/brands"
+                    onClick={() => setOpen(false)}
+                    className="flex items-center justify-between mb-3 text-[10px] font-black tracking-[0.3em] uppercase text-[#2D1F1F]/40 hover:text-[#C9A84C] transition-colors"
+                  >
                     {language === 'ar' ? 'العلامات التجارية' : 'Brands'}
-                  </p>
+                    <span className="text-[#C9A84C]">{language === 'ar' ? 'الكل ←' : 'All →'}</span>
+                  </Link>
                   <div className="grid grid-cols-2 gap-2 mb-5">
                     {featuredBrands.map(brand => (
                       <Link
                         key={brand.id}
-                        href={`/products?brand=${brand.slug}`}
+                        href={`/brands/${brand.slug}`}
                         onClick={() => setOpen(false)}
                         className="h-14 border border-[#2D1F1F]/10 hover:border-[#C9A84C] hover:text-[#C9A84C] transition-colors flex items-center justify-center bg-white px-2 text-center"
                         title={name(brand)}

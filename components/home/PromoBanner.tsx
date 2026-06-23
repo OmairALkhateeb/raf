@@ -16,7 +16,7 @@ export default function PromoBanner() {
     {
       icon: ShieldCheck,
       title: language === 'en' ? 'Authenticated Products' : 'منتجات موثقة',
-      desc: language === 'en' ? '100% genuine Omani brands' : '100% علامات تجارية عمانية',
+      desc: language === 'en' ? '100% authentic, selected brands' : 'علامات أصلية ومختارة 100%',
     },
     {
       icon: CreditCard,

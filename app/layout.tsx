@@ -7,23 +7,24 @@ import { AppProvider } from "@/contexts/AppContext";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import MobileMenu from "@/components/layout/MobileMenu";
+import MobileBottomNav from "@/components/layout/MobileBottomNav";
 import ToastContainer from "@/components/common/Toast";
 
 export const metadata: Metadata = {
   title: {
-    default: "RAF | Authentic Omani Products",
+    default: "RAF | Beauty, Care, Wellness & Gifts",
     template: "%s | RAF",
   },
-  description: "Discover premium Omani brands — fragrances, fashion, traditional crafts, food, and skincare. Celebrating Omani heritage and craftsmanship.",
-  keywords: ["Oman", "Omani brands", "Arabic fashion", "Amouage", "frankincense", "traditional crafts", "Omani honey"],
+  description: "Shop premium beauty, makeup, perfumes, skincare, lashes, nails, beauty devices, health & nutrition, and beautifully packaged gifts — delivered across Oman.",
+  keywords: ["Oman", "beauty", "makeup", "perfumes", "skincare", "lashes", "nails", "beauty devices", "health and nutrition", "gifts", "Amouage"],
   authors: [{ name: "RAF" }],
   creator: "RAF",
   openGraph: {
     type: "website",
     locale: "en_OM",
     alternateLocale: "ar_OM",
-    title: "RAF | Authentic Omani Products",
-    description: "Discover premium Omani brands celebrating local heritage and craftsmanship.",
+    title: "RAF | Beauty, Care, Wellness & Gifts",
+    description: "Premium beauty, care, wellness and gifts — elegantly curated for Oman.",
     siteName: "RAF",
   },
 };
@@ -50,6 +51,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   {children}
                 </main>
                 <Footer />
+                {/* Spacer so the fixed mobile bottom nav never covers the footer */}
+                <div className="h-16 lg:hidden" aria-hidden="true" />
+                <MobileBottomNav />
                 <ToastContainer />
               </AppProvider>
             </WishlistProvider>

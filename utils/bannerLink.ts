@@ -31,7 +31,7 @@ export function bannerHref(banner: Banner): string {
     case 'category':
       return t.categorySlug ? `/products?category=${encodeURIComponent(t.categorySlug)}` : '/products';
     case 'brand':
-      return t.brandSlug ? `/products?brand=${encodeURIComponent(t.brandSlug)}` : '/products';
+      return t.brandSlug ? `/brands/${encodeURIComponent(t.brandSlug)}` : '/brands';
     case 'product':
       return t.productSlug ? `/products/${encodeURIComponent(t.productSlug)}` : '/products';
     case 'product_listing':

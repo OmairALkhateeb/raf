@@ -32,6 +32,7 @@ export default function MobileMenu() {
   const navItems = [
     { href: '/', label: t.nav.home, icon: Home },
     { href: '/products', label: t.nav.products, icon: ShoppingBag },
+    { href: '/brands', label: t.nav.brands, icon: Tag },
     { href: '/cart', label: t.nav.cart, icon: ShoppingBag, badge: itemCount },
     { href: '/wishlist', label: t.nav.wishlist, icon: Heart, badge: wishlistCount },
     { href: '/account', label: t.nav.account, icon: User },
