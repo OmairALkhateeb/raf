@@ -128,9 +128,17 @@ export default function Footer() {
       <div className="border-t border-white/8">
         <div className="max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16 py-5 flex flex-col sm:flex-row justify-between items-center gap-2">
           <span className="text-[11px] text-white/25 tracking-wide">{t.footer.rights}</span>
-          <span className="text-[11px] text-white/25 tracking-wide">
-            {language === 'ar' ? 'صُنع بفخر في عُمان 🇴🇲' : 'Made with pride in Oman 🇴🇲'}
-          </span>
+          <a
+            href="https://axiscore.de/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group flex items-center gap-1.5 text-[11px] text-white/25 tracking-wide hover:text-white/45 transition-colors"
+          >
+            {language === 'ar' ? 'مُشغّل بواسطة' : 'Powered by'}
+            <span className="font-bold tracking-[0.15em] uppercase text-[#C9A84C] group-hover:text-white transition-colors">
+              AxisCore
+            </span>
+          </a>
         </div>
       </div>
     </footer>
