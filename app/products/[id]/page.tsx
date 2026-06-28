@@ -84,7 +84,7 @@ export default function ProductDetailPage() {
           {/* Image gallery */}
           <div className="space-y-3">
             {/* Main image */}
-            <div className="relative overflow-hidden bg-[#F5F3EF] group" style={{ aspectRatio: '4/5' }}>
+            <div className="relative overflow-hidden bg-[#F5F3EF] group rounded-xl" style={{ aspectRatio: '4/5' }}>
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeImg}
@@ -108,12 +108,12 @@ export default function ProductDetailPage() {
               {/* Badges */}
               <div className={`absolute top-4 flex flex-col gap-2 z-10 ${isRTL ? 'right-4' : 'left-4'}`}>
                 {product.discount && (
-                  <span className="px-3 py-1 bg-[#C9A84C] text-white text-[10px] font-black tracking-widest uppercase">
+                  <span className="px-3 py-1 bg-[#C9A84C] text-white text-[10px] font-black tracking-widest uppercase rounded-md">
                     −{product.discount}%
                   </span>
                 )}
                 {product.isNew && (
-                  <span className="px-3 py-1 bg-[#2D1F1F] text-[#E8D5A3] text-[10px] font-black tracking-widest uppercase">
+                  <span className="px-3 py-1 bg-[#2D1F1F] text-[#E8D5A3] text-[10px] font-black tracking-widest uppercase rounded-md">
                     {t.product.new}
                   </span>
                 )}
@@ -124,7 +124,7 @@ export default function ProductDetailPage() {
                 <>
                   <button
                     onClick={() => setActiveImg(i => (i - 1 + product.images.length) % product.images.length)}
-                    className={`absolute top-1/2 -translate-y-1/2 w-10 h-10 bg-white/80 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white ${
+                    className={`absolute top-1/2 -translate-y-1/2 w-10 h-10 bg-white/80 flex items-center justify-center rounded-md opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white ${
                       isRTL ? 'right-3' : 'left-3'
                     }`}
                   >
@@ -132,7 +132,7 @@ export default function ProductDetailPage() {
                   </button>
                   <button
                     onClick={() => setActiveImg(i => (i + 1) % product.images.length)}
-                    className={`absolute top-1/2 -translate-y-1/2 w-10 h-10 bg-white/80 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white ${
+                    className={`absolute top-1/2 -translate-y-1/2 w-10 h-10 bg-white/80 flex items-center justify-center rounded-md opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white ${
                       isRTL ? 'left-3' : 'right-3'
                     }`}
                   >
@@ -149,7 +149,7 @@ export default function ProductDetailPage() {
                   <button
                     key={i}
                     onClick={() => setActiveImg(i)}
-                    className={`relative w-20 h-20 overflow-hidden border-2 transition-all ${
+                    className={`relative w-20 h-20 overflow-hidden border-2 rounded-md transition-all ${
                       activeImg === i ? 'border-[#C9A84C]' : 'border-transparent hover:border-[#2D1F1F]/25'
                     }`}
                   >
@@ -176,7 +176,7 @@ export default function ProductDetailPage() {
             {/* Rating + stock */}
             <div className={`flex items-center gap-5 mb-5 ${isRTL ? 'flex-row-reverse' : ''}`}>
               <Rating value={product.rating} count={product.reviewCount} size={14} />
-              <span className={`text-[10px] font-black tracking-[0.15em] uppercase px-3 py-1 ${
+              <span className={`text-[10px] font-black tracking-[0.15em] uppercase px-3 py-1 rounded-md ${
                 product.inStock
                   ? 'text-[#C9A84C] bg-[#C9A84C]/10'
                   : 'text-red-500 bg-red-50'
@@ -195,7 +195,7 @@ export default function ProductDetailPage() {
                   <span className="text-lg text-[#2D1F1F]/30 line-through">
                     {language === 'ar' ? `${product.originalPrice.toFixed(3)} ر.ع.` : `OMR ${product.originalPrice.toFixed(3)}`}
                   </span>
-                  <span className="px-2.5 py-0.5 bg-[#C9A84C]/12 text-[#C9A84C] text-xs font-bold">
+                  <span className="px-2.5 py-0.5 bg-[#C9A84C]/12 text-[#C9A84C] text-xs font-bold rounded-md">
                     −{product.discount}%
                   </span>
                 </>
@@ -218,7 +218,7 @@ export default function ProductDetailPage() {
                     <button
                       key={color}
                       onClick={() => setSelectedColor(color)}
-                      className={`px-5 py-2 text-xs font-medium border transition-all ${
+                      className={`px-5 py-2 text-xs font-medium border rounded-md transition-all ${
                         selectedColor === color
                           ? 'border-[#C9A84C] text-[#C9A84C] bg-[#C9A84C]/8'
                           : 'border-[#2D1F1F]/20 text-[#2D1F1F]/70 hover:border-[#2D1F1F]/50'
@@ -242,7 +242,7 @@ export default function ProductDetailPage() {
                     <button
                       key={size}
                       onClick={() => setSelectedSize(size)}
-                      className={`w-12 h-10 text-xs font-bold border transition-all ${
+                      className={`w-12 h-10 text-xs font-bold border rounded-md transition-all ${
                         selectedSize === size
                           ? 'border-[#C9A84C] bg-[#C9A84C] text-white'
                           : 'border-[#2D1F1F]/20 text-[#2D1F1F]/70 hover:border-[#C9A84C]'
@@ -261,7 +261,7 @@ export default function ProductDetailPage() {
                 {t.product.quantity}
               </span>
               <div className={`flex items-center gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
-                <div className={`flex items-center border border-[#2D1F1F]/15 ${isRTL ? 'flex-row-reverse' : ''}`}>
+                <div className={`flex items-center border border-[#2D1F1F]/15 rounded-md overflow-hidden ${isRTL ? 'flex-row-reverse' : ''}`}>
                   <button
                     onClick={() => setQuantity(q => Math.max(1, q - 1))}
                     className="w-11 h-11 flex items-center justify-center text-[#2D1F1F]/50 hover:text-[#2D1F1F] hover:bg-[#2D1F1F]/5 transition-colors"
@@ -290,7 +290,7 @@ export default function ProductDetailPage() {
                 whileTap={{ scale: 0.97 }}
                 onClick={handleAddToCart}
                 disabled={!product.inStock}
-                className="flex-1 h-13 bg-[#2D1F1F] text-white text-[11px] font-black tracking-[0.2em] uppercase flex items-center justify-center gap-2.5 hover:bg-[#C9A84C] transition-colors duration-300 disabled:opacity-40"
+                className="flex-1 h-13 bg-[#2D1F1F] text-white text-[11px] font-black tracking-[0.2em] uppercase flex items-center justify-center gap-2.5 rounded-md hover:bg-[#C9A84C] transition-colors duration-300 disabled:opacity-40"
                 style={{ height: 52 }}
               >
                 <ShoppingBag size={16} />
@@ -300,7 +300,7 @@ export default function ProductDetailPage() {
               <motion.button
                 whileTap={{ scale: 0.95 }}
                 onClick={() => { toggleWishlist(product); showToast(inWishlist ? t.common.removedFromWishlist : t.common.addedToWishlist); }}
-                className={`w-13 h-13 border-2 flex items-center justify-center transition-all ${
+                className={`w-13 h-13 border-2 flex items-center justify-center rounded-md transition-all ${
                   inWishlist
                     ? 'border-[#C9A84C] bg-[#C9A84C]/10 text-[#C9A84C]'
                     : 'border-[#2D1F1F]/20 text-[#2D1F1F]/60 hover:border-[#C9A84C] hover:text-[#C9A84C]'
@@ -313,7 +313,7 @@ export default function ProductDetailPage() {
               <motion.button
                 whileTap={{ scale: 0.95 }}
                 onClick={() => { navigator.clipboard?.writeText(window.location.href); showToast('Link copied!', 'info'); }}
-                className="border-2 border-[#2D1F1F]/20 flex items-center justify-center text-[#2D1F1F]/60 hover:border-[#C9A84C] hover:text-[#C9A84C] transition-all"
+                className="border-2 border-[#2D1F1F]/20 flex items-center justify-center rounded-md text-[#2D1F1F]/60 hover:border-[#C9A84C] hover:text-[#C9A84C] transition-all"
                 style={{ width: 52, height: 52 }}
               >
                 <Share2 size={17} />
@@ -366,7 +366,7 @@ export default function ProductDetailPage() {
                   <p className="text-[#2D1F1F]/65 leading-relaxed max-w-2xl text-sm">{description}</p>
                   <div className={`flex flex-wrap gap-2 mt-6 ${isRTL ? 'flex-row-reverse' : ''}`}>
                     {product.tags.map(tag => (
-                      <span key={tag} className="px-4 py-1.5 border border-[#2D1F1F]/12 text-[10px] font-bold tracking-[0.15em] uppercase text-[#2D1F1F]/50">
+                      <span key={tag} className="px-4 py-1.5 border border-[#2D1F1F]/12 rounded-md text-[10px] font-bold tracking-[0.15em] uppercase text-[#2D1F1F]/50">
                         #{tag}
                       </span>
                     ))}
@@ -376,7 +376,7 @@ export default function ProductDetailPage() {
 
               {activeTab === 'specs' && (
                 <motion.div key="specs" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
-                  <div className="max-w-lg border border-[#2D1F1F]/8">
+                  <div className="max-w-lg border border-[#2D1F1F]/8 rounded-xl overflow-hidden">
                     {product.specifications.map((spec, i) => (
                       <div key={i} className={`flex items-stretch ${i > 0 ? 'border-t border-[#2D1F1F]/8' : ''} ${isRTL ? 'flex-row-reverse' : ''}`}>
                         <span className="w-2/5 px-5 py-3.5 text-[11px] font-black tracking-[0.1em] uppercase text-[#2D1F1F]/40 bg-[#FAF7F2] border-r border-[#2D1F1F]/8">
@@ -398,7 +398,7 @@ export default function ProductDetailPage() {
                   ) : (
                     <div className="space-y-5 max-w-2xl">
                       {reviews.map(review => (
-                        <div key={review.id} className="border border-[#2D1F1F]/8 p-6">
+                        <div key={review.id} className="border border-[#2D1F1F]/8 rounded-xl p-6">
                           <div className={`flex items-start justify-between mb-3 ${isRTL ? 'flex-row-reverse' : ''}`}>
                             <div>
                               <div className={`flex items-center gap-3 ${isRTL ? 'flex-row-reverse' : ''}`}>

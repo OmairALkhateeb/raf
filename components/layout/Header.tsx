@@ -111,7 +111,7 @@ export default function Header() {
                         value={searchQuery}
                         onChange={e => setSearchQuery(e.target.value)}
                         onKeyDown={e => e.key === 'Enter' && handleSearch()}
-                        className={`w-full h-9 bg-[#FAF7F2] border border-[#2D1F1F]/15 text-sm focus:outline-none focus:border-[#C9A84C] transition-colors ${
+                        className={`w-full h-9 bg-[#FAF7F2] border border-[#2D1F1F]/15 text-sm rounded-md focus:outline-none focus:border-[#C9A84C] transition-colors ${
                           isRTL ? 'pr-4 pl-9 text-right' : 'pl-4 pr-9'
                         }`}
                       />
@@ -127,7 +127,7 @@ export default function Header() {
                             initial={{ opacity: 0, y: -8 }}
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0 }}
-                            className="absolute top-full mt-1 w-full bg-white shadow-lg border border-[#2D1F1F]/8 overflow-hidden z-50"
+                            className="absolute top-full mt-1 w-full bg-white shadow-lg border border-[#2D1F1F]/8 overflow-hidden z-50 rounded-md"
                           >
                             {searchSuggestions.map((s, i) => (
                               <button
@@ -200,7 +200,7 @@ export default function Header() {
               {/* Cart CTA */}
               <Link
                 href="/cart"
-                className="flex items-center gap-2.5 bg-[#2D1F1F] text-white px-5 py-2.5 text-[11px] font-bold tracking-[0.2em] uppercase hover:bg-[#C9A84C] transition-colors duration-300"
+                className="flex items-center gap-2.5 bg-[#2D1F1F] text-white px-5 py-2.5 text-[11px] font-bold tracking-[0.2em] uppercase rounded-md hover:bg-[#C9A84C] transition-colors duration-300"
                 aria-label="Cart"
               >
                 <ShoppingBag size={15} />
@@ -228,13 +228,13 @@ export default function Header() {
                   onChange={e => setSearchQuery(e.target.value)}
                   onKeyDown={e => e.key === 'Enter' && handleSearch()}
                   autoFocus
-                  className={`w-full h-10 bg-[#FAF7F2] border border-[#2D1F1F]/15 text-sm px-4 focus:outline-none focus:border-[#C9A84C] ${isRTL ? 'pl-10 text-right' : 'pr-10'}`}
+                  className={`w-full h-10 bg-[#FAF7F2] border border-[#2D1F1F]/15 text-sm px-4 rounded-md focus:outline-none focus:border-[#C9A84C] ${isRTL ? 'pl-10 text-right' : 'pr-10'}`}
                 />
                 <button onClick={() => handleSearch()} className={`absolute top-1/2 -translate-y-1/2 mt-0.5 p-2 text-[#C9A84C] ${isRTL ? 'left-6' : 'right-6'}`}>
                   <Search size={16} />
                 </button>
                 {searchSuggestions.length > 0 && (
-                  <div className="mt-1 bg-white border border-[#2D1F1F]/8 shadow-lg">
+                  <div className="mt-1 bg-white border border-[#2D1F1F]/8 shadow-lg rounded-md overflow-hidden">
                     {searchSuggestions.map((s, i) => (
                       <button key={i} onClick={() => handleSearch(s)} className="w-full text-sm hover:bg-[#FAF7F2] px-4 py-2.5 text-left transition-colors">
                         {s}

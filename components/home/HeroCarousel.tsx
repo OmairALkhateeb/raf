@@ -67,8 +67,11 @@ export default function HeroCarousel({ banners }: HeroCarouselProps) {
 
   return (
     <div
-      className="relative w-full overflow-hidden bg-[#2D1F1F]"
-      style={{ height: 'min(88vh, 780px)', minHeight: '520px' }}
+      // Mobile: short, elegant hero (~65vh, capped) so it never feels like a full-screen takeover.
+      // sm and up: original cinematic height (min(88vh, 780px), min 520px).
+      className="relative w-full overflow-hidden bg-[#2D1F1F]
+        h-[65vh] min-h-[440px] max-h-[600px]
+        sm:h-[min(88vh,780px)] sm:min-h-[520px] sm:max-h-none"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
@@ -124,7 +127,7 @@ export default function HeroCarousel({ banners }: HeroCarouselProps) {
         <div
           className={`absolute inset-0 flex items-center ${isRTL ? 'justify-end' : 'justify-start'}`}
         >
-          <div className={`px-8 sm:px-16 lg:px-24 max-w-3xl ${isRTL ? 'text-right' : 'text-left'}`}>
+          <div className={`px-6 sm:px-16 lg:px-24 max-w-3xl ${isRTL ? 'text-right' : 'text-left'}`}>
             <AnimatePresence mode="wait">
               <motion.div
                 key={`content-${active}`}
@@ -136,10 +139,10 @@ export default function HeroCarousel({ banners }: HeroCarouselProps) {
                 {/* Overline label */}
                 <motion.div
                   variants={contentItem}
-                  className={`flex items-center gap-3 mb-5 ${isRTL ? 'flex-row-reverse' : ''}`}
+                  className={`flex items-center gap-3 mb-3 sm:mb-5 ${isRTL ? 'flex-row-reverse' : ''}`}
                 >
-                  <div className="w-12 h-px bg-[#C9A84C]" />
-                  <span className="text-[#C9A84C] text-[11px] font-black tracking-[0.4em] uppercase">
+                  <div className="w-10 sm:w-12 h-px bg-[#C9A84C]" />
+                  <span className="text-[#C9A84C] text-[10px] sm:text-[11px] font-black tracking-[0.35em] sm:tracking-[0.4em] uppercase">
                     RAF · Luxury Collection
                   </span>
                 </motion.div>
@@ -147,8 +150,8 @@ export default function HeroCarousel({ banners }: HeroCarouselProps) {
                 {/* Headline */}
                 <motion.h1
                   variants={contentItem}
-                  className="font-serif font-bold text-white leading-[1.05] mb-6"
-                  style={{ fontSize: 'clamp(2.4rem, 5.5vw, 4.2rem)' }}
+                  className="font-serif font-bold text-white leading-[1.05] mb-4 sm:mb-6"
+                  style={{ fontSize: 'clamp(1.85rem, 5.5vw, 4.2rem)' }}
                 >
                   {language === 'ar' ? banner.titleAr : banner.title}
                 </motion.h1>
@@ -156,7 +159,7 @@ export default function HeroCarousel({ banners }: HeroCarouselProps) {
                 {/* Subtitle */}
                 <motion.p
                   variants={contentItem}
-                  className="text-white/70 text-base sm:text-lg leading-relaxed mb-10 max-w-lg font-light"
+                  className="text-white/70 text-sm sm:text-lg leading-relaxed mb-6 sm:mb-10 max-w-lg font-light line-clamp-3 sm:line-clamp-none"
                 >
                   {language === 'ar' ? banner.subtitleAr : banner.subtitle}
                 </motion.p>
@@ -164,12 +167,12 @@ export default function HeroCarousel({ banners }: HeroCarouselProps) {
                 {/* CTA buttons */}
                 <motion.div
                   variants={contentItem}
-                  className={`flex flex-wrap items-center gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}
+                  className={`flex flex-wrap items-center gap-3 sm:gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}
                 >
                   <Link
                     href={bannerHref(banner)}
                     onClick={() => trackBannerClick(banner.id)}
-                    className="group inline-flex items-center gap-3 bg-[#C9A84C] text-[#2D1F1F] px-8 py-4 text-[11px] font-black tracking-[0.25em] uppercase hover:bg-white transition-all duration-300"
+                    className="group inline-flex items-center gap-3 bg-[#C9A84C] text-[#2D1F1F] px-6 sm:px-8 py-3 sm:py-4 text-[11px] font-black tracking-[0.2em] sm:tracking-[0.25em] uppercase rounded-md hover:bg-white transition-all duration-300"
                   >
                     {language === 'ar' ? banner.buttonTextAr : banner.buttonText}
                     <ChevronRight
@@ -200,7 +203,7 @@ export default function HeroCarousel({ banners }: HeroCarouselProps) {
       {/* Navigation arrows — desktop only; mobile swipes */}
       <button
         onClick={prev}
-        className={`hidden sm:flex absolute top-1/2 -translate-y-1/2 z-20 w-12 h-12 border border-white/25 text-white items-center justify-center hover:bg-white/10 hover:border-[#C9A84C] hover:text-[#C9A84C] transition-all duration-300 ${
+        className={`hidden sm:flex absolute top-1/2 -translate-y-1/2 z-20 w-12 h-12 border border-white/25 text-white items-center justify-center rounded-md hover:bg-white/10 hover:border-[#C9A84C] hover:text-[#C9A84C] transition-all duration-300 ${
           isRTL ? 'right-6' : 'left-6'
         }`}
         aria-label="Previous"
@@ -209,7 +212,7 @@ export default function HeroCarousel({ banners }: HeroCarouselProps) {
       </button>
       <button
         onClick={next}
-        className={`hidden sm:flex absolute top-1/2 -translate-y-1/2 z-20 w-12 h-12 border border-white/25 text-white items-center justify-center hover:bg-white/10 hover:border-[#C9A84C] hover:text-[#C9A84C] transition-all duration-300 ${
+        className={`hidden sm:flex absolute top-1/2 -translate-y-1/2 z-20 w-12 h-12 border border-white/25 text-white items-center justify-center rounded-md hover:bg-white/10 hover:border-[#C9A84C] hover:text-[#C9A84C] transition-all duration-300 ${
           isRTL ? 'left-6' : 'right-6'
         }`}
         aria-label="Next"

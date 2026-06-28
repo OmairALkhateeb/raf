@@ -83,7 +83,7 @@ export default function MobileMenu() {
                   </div>
                   <div className="flex items-center gap-2">
                     {item.badge != null && item.badge > 0 && (
-                      <span className="min-w-[20px] h-5 bg-[#C9A84C] text-white text-xs font-bold flex items-center justify-center px-1">
+                      <span className="min-w-[20px] h-5 bg-[#C9A84C] text-white text-xs font-bold flex items-center justify-center px-1 rounded-md">
                         {item.badge}
                       </span>
                     )}
@@ -149,7 +149,7 @@ export default function MobileMenu() {
                   setLanguage(language === 'en' ? 'ar' : 'en');
                   close();
                 }}
-                className="flex items-center gap-2 w-full px-4 py-3 bg-[#2D1F1F] text-[#E8D5A3] text-[11px] font-black tracking-[0.15em] uppercase hover:bg-[#C9A84C] hover:text-[#2D1F1F] transition-colors"
+                className="flex items-center gap-2 w-full px-4 py-3 bg-[#2D1F1F] text-[#E8D5A3] text-[11px] font-black tracking-[0.15em] uppercase rounded-md hover:bg-[#C9A84C] hover:text-[#2D1F1F] transition-colors"
               >
                 <Globe size={16} />
                 {language === 'en' ? 'التبديل إلى العربية' : 'Switch to English'}

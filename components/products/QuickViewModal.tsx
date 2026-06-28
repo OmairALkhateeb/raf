@@ -68,13 +68,13 @@ export default function QuickViewModal({ product, onClose }: QuickViewModalProps
           animate={{ scale: 1, opacity: 1, y: 0 }}
           exit={{ scale: 0.95, opacity: 0, y: 16 }}
           transition={{ duration: 0.22, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="bg-white max-w-3xl w-full max-h-[92vh] overflow-y-auto relative"
+          className="bg-white max-w-3xl w-full max-h-[92vh] overflow-y-auto relative rounded-2xl"
           dir={isRTL ? 'rtl' : 'ltr'}
         >
           {/* Close */}
           <button
             onClick={onClose}
-            className={`absolute top-4 z-20 w-8 h-8 bg-white border border-[#2D1F1F]/12 flex items-center justify-center hover:border-[#2D1F1F] transition-colors ${
+            className={`absolute top-4 z-20 w-8 h-8 bg-white border border-[#2D1F1F]/12 flex items-center justify-center rounded-md hover:border-[#2D1F1F] transition-colors ${
               isRTL ? 'left-4' : 'right-4'
             }`}
           >
@@ -102,7 +102,7 @@ export default function QuickViewModal({ product, onClose }: QuickViewModalProps
                   <>
                     <button
                       onClick={() => setActiveImg(i => (i - 1 + product.images.length) % product.images.length)}
-                      className={`absolute top-1/2 -translate-y-1/2 w-9 h-9 bg-white/85 flex items-center justify-center hover:bg-white transition-colors ${
+                      className={`absolute top-1/2 -translate-y-1/2 w-9 h-9 bg-white/85 flex items-center justify-center rounded-md hover:bg-white transition-colors ${
                         isRTL ? 'right-2' : 'left-2'
                       }`}
                     >
@@ -110,7 +110,7 @@ export default function QuickViewModal({ product, onClose }: QuickViewModalProps
                     </button>
                     <button
                       onClick={() => setActiveImg(i => (i + 1) % product.images.length)}
-                      className={`absolute top-1/2 -translate-y-1/2 w-9 h-9 bg-white/85 flex items-center justify-center hover:bg-white transition-colors ${
+                      className={`absolute top-1/2 -translate-y-1/2 w-9 h-9 bg-white/85 flex items-center justify-center rounded-md hover:bg-white transition-colors ${
                         isRTL ? 'left-2' : 'right-2'
                       }`}
                     >
@@ -126,7 +126,7 @@ export default function QuickViewModal({ product, onClose }: QuickViewModalProps
                     <button
                       key={i}
                       onClick={() => setActiveImg(i)}
-                      className={`w-12 h-12 overflow-hidden border-2 transition-colors ${
+                      className={`w-12 h-12 overflow-hidden border-2 rounded-md transition-colors ${
                         activeImg === i ? 'border-[#C9A84C]' : 'border-transparent hover:border-[#2D1F1F]/20'
                       }`}
                     >
@@ -145,7 +145,7 @@ export default function QuickViewModal({ product, onClose }: QuickViewModalProps
 
                 <div className={`flex items-center gap-3 mb-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
                   <Rating value={product.rating} count={product.reviewCount} />
-                  <span className={`text-[10px] font-black tracking-[0.1em] uppercase px-2.5 py-1 ${
+                  <span className={`text-[10px] font-black tracking-[0.1em] uppercase px-2.5 py-1 rounded-md ${
                     product.inStock ? 'bg-[#C9A84C]/10 text-[#C9A84C]' : 'bg-red-50 text-red-500'
                   }`}>
                     {product.inStock ? t.product.inStock : t.product.outOfStock}
@@ -162,7 +162,7 @@ export default function QuickViewModal({ product, onClose }: QuickViewModalProps
                     </span>
                   )}
                   {product.discount && (
-                    <span className="text-[10px] font-black bg-[#C9A84C] text-white px-2 py-0.5">−{product.discount}%</span>
+                    <span className="text-[10px] font-black bg-[#C9A84C] text-white px-2 py-0.5 rounded-md">−{product.discount}%</span>
                   )}
                 </div>
 
@@ -177,7 +177,7 @@ export default function QuickViewModal({ product, onClose }: QuickViewModalProps
                         <button
                           key={color}
                           onClick={() => setSelectedColor(color)}
-                          className={`px-4 py-1.5 text-xs border transition-all font-medium ${
+                          className={`px-4 py-1.5 text-xs border transition-all font-medium rounded-md ${
                             selectedColor === color
                               ? 'border-[#C9A84C] bg-[#C9A84C]/8 text-[#C9A84C]'
                               : 'border-[#2D1F1F]/15 text-[#2D1F1F]/70 hover:border-[#2D1F1F]/40'
@@ -199,7 +199,7 @@ export default function QuickViewModal({ product, onClose }: QuickViewModalProps
                         <button
                           key={size}
                           onClick={() => setSelectedSize(size)}
-                          className={`w-10 h-9 text-xs border font-bold transition-all ${
+                          className={`w-10 h-9 text-xs border font-bold transition-all rounded-md ${
                             selectedSize === size
                               ? 'border-[#C9A84C] bg-[#C9A84C] text-white'
                               : 'border-[#2D1F1F]/15 text-[#2D1F1F]/70 hover:border-[#C9A84C]'
@@ -215,7 +215,7 @@ export default function QuickViewModal({ product, onClose }: QuickViewModalProps
                 {/* Quantity */}
                 <div className="mb-5">
                   <p className="text-[10px] font-black tracking-[0.2em] uppercase text-[#2D1F1F]/45 mb-2">{t.product.quantity}</p>
-                  <div className={`flex items-center border border-[#2D1F1F]/15 w-fit ${isRTL ? 'flex-row-reverse' : ''}`}>
+                  <div className={`flex items-center border border-[#2D1F1F]/15 w-fit rounded-md overflow-hidden ${isRTL ? 'flex-row-reverse' : ''}`}>
                     <button
                       onClick={() => setQuantity(q => Math.max(1, q - 1))}
                       className="w-9 h-9 flex items-center justify-center text-[#2D1F1F]/50 hover:text-[#2D1F1F] hover:bg-[#2D1F1F]/5 transition-colors"
@@ -240,14 +240,14 @@ export default function QuickViewModal({ product, onClose }: QuickViewModalProps
                 <button
                   onClick={handleAddToCart}
                   disabled={!product.inStock}
-                  className="flex-1 h-11 bg-[#2D1F1F] text-white text-[11px] font-black tracking-[0.18em] uppercase flex items-center justify-center gap-2 hover:bg-[#C9A84C] transition-colors disabled:opacity-40"
+                  className="flex-1 h-11 bg-[#2D1F1F] text-white text-[11px] font-black tracking-[0.18em] uppercase flex items-center justify-center gap-2 rounded-md hover:bg-[#C9A84C] transition-colors disabled:opacity-40"
                 >
                   <ShoppingBag size={14} />
                   {t.product.addToCart}
                 </button>
                 <button
                   onClick={() => { toggleWishlist(product); showToast(inWishlist ? t.common.removedFromWishlist : t.common.addedToWishlist); }}
-                  className={`w-11 h-11 border-2 flex items-center justify-center transition-all ${
+                  className={`w-11 h-11 border-2 flex items-center justify-center rounded-md transition-all ${
                     inWishlist
                       ? 'border-[#C9A84C] bg-[#C9A84C]/10 text-[#C9A84C]'
                       : 'border-[#2D1F1F]/20 text-[#2D1F1F]/60 hover:border-[#C9A84C] hover:text-[#C9A84C]'

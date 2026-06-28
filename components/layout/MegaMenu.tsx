@@ -140,7 +140,7 @@ export default function MegaMenu() {
                             href={`/products?category=${cat.slug}`}
                             onMouseEnter={() => setActiveId(cat.id)}
                             onClick={() => setOpen(false)}
-                            className={`flex items-center justify-between gap-3 px-3 py-2.5 rounded-sm transition-colors ${
+                            className={`flex items-center justify-between gap-3 px-3 py-2.5 rounded-md transition-colors ${
                               on ? 'bg-[#FAF7F2] text-[#C9A84C]' : 'text-[#2D1F1F]/80 hover:bg-[#FAF7F2]'
                             }`}
                           >
@@ -212,7 +212,7 @@ export default function MegaMenu() {
                         key={brand.id}
                         href={`/brands/${brand.slug}`}
                         onClick={() => setOpen(false)}
-                        className="h-14 border border-[#2D1F1F]/10 hover:border-[#C9A84C] hover:text-[#C9A84C] transition-colors flex items-center justify-center bg-white px-2 text-center"
+                        className="h-14 border border-[#2D1F1F]/10 rounded-md hover:border-[#C9A84C] hover:text-[#C9A84C] transition-colors flex items-center justify-center bg-white px-2 text-center"
                         title={name(brand)}
                       >
                         <span className="text-[12px] font-bold tracking-wide text-[#2D1F1F]/70">{name(brand)}</span>
@@ -224,7 +224,7 @@ export default function MegaMenu() {
                   <Link
                     href={`/products?category=${active.slug}`}
                     onClick={() => setOpen(false)}
-                    className="relative block overflow-hidden group"
+                    className="relative block overflow-hidden group rounded-lg"
                     style={{ aspectRatio: '16/10' }}
                   >
                     <Image src={active.image} alt={name(active)} fill sizes="288px" className="object-cover transition-transform duration-500 group-hover:scale-105" />

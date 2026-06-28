@@ -4,7 +4,7 @@ import CategoryGrid from '@/components/home/CategoryGrid';
 import FeaturedProducts from '@/components/home/FeaturedProducts';
 import BrandShowcase from '@/components/home/BrandShowcase';
 import BannerSection from '@/components/home/BannerSection';
-import PromoBanner from '@/components/home/PromoBanner';
+import AdsCarousel from '@/components/home/AdsCarousel';
 import { getBanners } from '@/lib/api/banners';
 import { categories } from '@/data/categories';
 import { getBestsellerProducts } from '@/data/products';
@@ -29,10 +29,14 @@ export default async function HomePage() {
     <div>
       <HeroCarousel banners={heroBanners} />
 
-      <PromoBanner />
+      {/* Featured promotions — replaces the old trust-badges row. */}
+      <AdsCarousel />
 
       {/* Primary gateway: shop by category */}
       <CategoryGrid categories={categories} />
+
+      {/* Shop by brand — promoted high on the page (was previously near the footer). */}
+      <BrandShowcase brands={brands} />
 
       {/* Mid-page marketing banners (clickable → related products) */}
       <BannerSection banners={middleBanners} />
@@ -46,8 +50,6 @@ export default async function HomePage() {
         viewAllHref="/products?sort=popular"
         dark
       />
-
-      <BrandShowcase brands={brands} />
 
       <BannerSection banners={bottomBanners} />
     </div>

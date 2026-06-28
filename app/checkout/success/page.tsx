@@ -31,7 +31,7 @@ export default function CheckoutSuccessPage() {
             transition={{ type: 'spring', stiffness: 180, damping: 14 }}
             className="mb-8"
           >
-            <div className="w-20 h-20 bg-[#C9A84C]/10 flex items-center justify-center mx-auto">
+            <div className="w-20 h-20 bg-[#C9A84C]/10 flex items-center justify-center mx-auto rounded-full">
               <CheckCircle size={40} className="text-[#C9A84C]" strokeWidth={1.5} />
             </div>
           </motion.div>
@@ -45,7 +45,7 @@ export default function CheckoutSuccessPage() {
             <p className="text-sm font-bold text-[#C9A84C] tracking-widest mb-10">#{orderId}</p>
 
             {/* Steps */}
-            <div className="border border-[#2D1F1F]/8 p-8 mb-8 text-left">
+            <div className="border border-[#2D1F1F]/8 rounded-xl p-8 mb-8 text-left">
               <h3 className="text-[10px] font-black tracking-[0.3em] uppercase text-[#2D1F1F]/45 mb-6">
                 {language === 'en' ? "What happens next?" : "ماذا يحدث بعد ذلك؟"}
               </h3>
@@ -56,7 +56,7 @@ export default function CheckoutSuccessPage() {
                   language === 'en' ? 'Delivery within 2–4 business days' : 'التسليم خلال 2–4 أيام عمل',
                 ].map((text, i) => (
                   <div key={i} className={`flex items-start gap-4 ${isRTL ? 'flex-row-reverse text-right' : ''}`}>
-                    <div className="w-6 h-6 bg-[#C9A84C] text-white text-[10px] font-black flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <div className="w-6 h-6 bg-[#C9A84C] text-white text-[10px] font-black flex items-center justify-center flex-shrink-0 mt-0.5 rounded-md">
                       {i + 1}
                     </div>
                     <p className="text-sm text-[#2D1F1F]/65 leading-relaxed">{text}</p>
@@ -68,14 +68,14 @@ export default function CheckoutSuccessPage() {
             <div className={`flex gap-3 ${isRTL ? 'flex-row-reverse' : ''}`}>
               <Link
                 href="/account"
-                className="flex-1 h-12 border border-[#2D1F1F]/20 text-[#2D1F1F] text-[11px] font-black tracking-[0.2em] uppercase flex items-center justify-center gap-2 hover:border-[#2D1F1F] hover:bg-[#2D1F1F] hover:text-white transition-colors"
+                className="flex-1 h-12 border border-[#2D1F1F]/20 rounded-md text-[#2D1F1F] text-[11px] font-black tracking-[0.2em] uppercase flex items-center justify-center gap-2 hover:border-[#2D1F1F] hover:bg-[#2D1F1F] hover:text-white transition-colors"
               >
                 <Package size={14} />
                 {t.checkout.trackOrder}
               </Link>
               <Link
                 href="/"
-                className="flex-1 h-12 bg-[#C9A84C] text-[#2D1F1F] text-[11px] font-black tracking-[0.2em] uppercase flex items-center justify-center gap-2 hover:bg-[#2D1F1F] hover:text-white transition-colors"
+                className="flex-1 h-12 bg-[#C9A84C] text-[#2D1F1F] text-[11px] font-black tracking-[0.2em] uppercase flex items-center justify-center gap-2 rounded-md hover:bg-[#2D1F1F] hover:text-white transition-colors"
               >
                 <Home size={14} />
                 {t.checkout.continueShopping}

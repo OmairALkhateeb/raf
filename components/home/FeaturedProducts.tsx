@@ -95,7 +95,7 @@ export default function FeaturedProducts({
         >
           <Link
             href={viewAllHref}
-            className={`group inline-flex items-center gap-3 border px-8 py-3.5 text-[11px] font-black tracking-[0.3em] uppercase transition-all duration-300 ${
+            className={`group inline-flex items-center gap-3 border px-8 py-3.5 text-[11px] font-black tracking-[0.3em] uppercase rounded-md transition-all duration-300 ${
               dark
                 ? 'border-[#C9A84C]/50 text-[#C9A84C] hover:bg-[#C9A84C] hover:text-[#2D1F1F] hover:border-[#C9A84C]'
                 : 'border-[#2D1F1F]/20 text-[#2D1F1F] hover:bg-[#2D1F1F] hover:text-white hover:border-[#2D1F1F]'

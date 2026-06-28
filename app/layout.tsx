@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Cairo, Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "@/contexts/CartContext";
 import { WishlistProvider } from "@/contexts/WishlistContext";
@@ -9,6 +10,35 @@ import Footer from "@/components/layout/Footer";
 import MobileMenu from "@/components/layout/MobileMenu";
 import MobileBottomNav from "@/components/layout/MobileBottomNav";
 import ToastContainer from "@/components/common/Toast";
+
+// Self-hosted via next/font — replaces the external Google Fonts <link> for
+// better performance, no FOUT, and so the CSS variables below are guaranteed
+// to be defined before any component renders.
+//
+// Cairo includes both Latin and Arabic subsets, so it doubles as the universal
+// fallback for any element whose primary font (Inter or Playfair) lacks the
+// glyphs being rendered — this is what stops Arabic headings from falling
+// back to the browser's default serif (Times New Roman).
+const cairo = Cairo({
+  subsets: ["arabic", "latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-cairo",
+  display: "swap",
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-inter",
+  display: "swap",
+});
+
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-playfair",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: {
@@ -31,16 +61,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="h-full">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Cairo:wght@300;400;500;600;700&display=swap"
-          rel="stylesheet"
-        />
-      </head>
-      <body className="min-h-full flex flex-col bg-[#FAF7F2]">
+    <html
+      lang="en"
+      className={`h-full ${cairo.variable} ${inter.variable} ${playfair.variable}`}
+    >
+      <body className="min-h-full flex flex-col bg-[#FAF7F2] font-sans">
         <LanguageProvider>
           <CartProvider>
             <WishlistProvider>

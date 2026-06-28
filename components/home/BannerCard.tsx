@@ -35,7 +35,7 @@ export default function BannerCard({ banner, ratio = '21/9' }: BannerCardProps) 
       <Link
         href={bannerHref(banner)}
         onClick={() => trackBannerClick(banner.id)}
-        className="group relative block overflow-hidden"
+        className="group relative block overflow-hidden rounded-2xl"
         style={{ aspectRatio: ratio, backgroundColor: banner.bgColor ?? '#2D1F1F' }}
         dir={isRTL ? 'rtl' : 'ltr'}
       >
@@ -67,7 +67,7 @@ export default function BannerCard({ banner, ratio = '21/9' }: BannerCardProps) 
             {title}
           </h3>
           <p className="text-white/75 text-sm sm:text-base mb-5 line-clamp-2">{subtitle}</p>
-          <span className="inline-flex items-center gap-2 bg-[#C9A84C] text-[#2D1F1F] px-6 py-3 text-[11px] font-black tracking-[0.2em] uppercase group-hover:bg-white transition-colors duration-300">
+          <span className="inline-flex items-center gap-2 bg-[#C9A84C] text-[#2D1F1F] px-6 py-3 text-[11px] font-black tracking-[0.2em] uppercase rounded-md group-hover:bg-white transition-colors duration-300">
             {button}
             <ChevronRight size={14} className={`transition-transform duration-300 group-hover:translate-x-1 ${isRTL ? 'rotate-180' : ''}`} />
           </span>

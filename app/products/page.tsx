@@ -236,7 +236,7 @@ function ProductsContent() {
   const renderOption = (rowKey: string, active: boolean, label: string, onToggle: () => void, radio?: boolean) => (
     <label key={rowKey} className="flex items-center justify-between py-2 cursor-pointer group">
       <span className="text-[13px] text-[#2D1F1F]/75 group-hover:text-[#2D1F1F] transition-colors">{label}</span>
-      <span className={`w-[18px] h-[18px] flex-shrink-0 ${radio ? 'rounded-full' : 'rounded'} border flex items-center justify-center transition-colors ${active ? 'border-[#C9A84C] bg-[#C9A84C]' : 'border-[#2D1F1F]/25 group-hover:border-[#C9A84C]'}`}>
+      <span className={`w-[18px] h-[18px] flex-shrink-0 ${radio ? 'rounded-full' : 'rounded-sm'} border flex items-center justify-center transition-colors ${active ? 'border-[#C9A84C] bg-[#C9A84C]' : 'border-[#2D1F1F]/25 group-hover:border-[#C9A84C]'}`}>
         {active && (radio ? <span className="w-2 h-2 rounded-full bg-white" /> : <Check size={11} className="text-white" />)}
       </span>
       <input type={radio ? 'radio' : 'checkbox'} className="sr-only" checked={active} onChange={onToggle} />
@@ -250,7 +250,7 @@ function ProductsContent() {
         value={groupSearch[groupKey] ?? ''}
         onChange={e => setSearch(groupKey, e.target.value)}
         placeholder={language === 'ar' ? 'بحث...' : 'Search...'}
-        className={`w-full h-9 bg-[#FAF7F2] border border-[#2D1F1F]/10 text-[13px] focus:outline-none focus:border-[#C9A84C] ${isRTL ? 'pr-9 pl-3 text-right' : 'pl-9 pr-3'}`}
+        className={`w-full h-9 bg-[#FAF7F2] border border-[#2D1F1F]/10 text-[13px] rounded-md focus:outline-none focus:border-[#C9A84C] ${isRTL ? 'pr-9 pl-3 text-right' : 'pl-9 pr-3'}`}
       />
     </div>
   );
@@ -277,11 +277,11 @@ function ProductsContent() {
         <div className={`flex items-center gap-2 pt-1 ${isRTL ? 'flex-row-reverse' : ''}`}>
           <input type="number" inputMode="numeric" placeholder={`${f.min ?? ''}`} value={r.min ?? ''} min={f.min} max={f.max}
             onChange={e => setRange(f.key, e.target.value === '' ? undefined : Number(e.target.value), r.max)}
-            className="w-full h-9 px-2 text-sm border border-[#2D1F1F]/15 focus:outline-none focus:border-[#C9A84C]" />
+            className="w-full h-9 px-2 text-sm border border-[#2D1F1F]/15 rounded-md focus:outline-none focus:border-[#C9A84C]" />
           <span className="text-[#2D1F1F]/30 text-xs">—</span>
           <input type="number" inputMode="numeric" placeholder={`${f.max ?? ''}`} value={r.max ?? ''} min={f.min} max={f.max}
             onChange={e => setRange(f.key, r.min, e.target.value === '' ? undefined : Number(e.target.value))}
-            className="w-full h-9 px-2 text-sm border border-[#2D1F1F]/15 focus:outline-none focus:border-[#C9A84C]" />
+            className="w-full h-9 px-2 text-sm border border-[#2D1F1F]/15 rounded-md focus:outline-none focus:border-[#C9A84C]" />
         </div>
       );
     }
@@ -327,7 +327,7 @@ function ProductsContent() {
         <button onClick={() => toggleGroup(groupKey)} className="w-full flex items-center justify-between py-4">
           <span className="flex items-center gap-2 text-[13px] font-bold text-[#2D1F1F]">
             {title}
-            {count > 0 && <span className="min-w-[18px] h-[18px] px-1 rounded-full bg-[#C9A84C] text-white text-[10px] font-black flex items-center justify-center">{count}</span>}
+            {count > 0 && <span className="min-w-[18px] h-[18px] px-1 rounded-md bg-[#C9A84C] text-white text-[10px] font-black flex items-center justify-center">{count}</span>}
           </span>
           <ChevronDown size={16} className={`text-[#2D1F1F]/40 transition-transform duration-200 ${open ? 'rotate-180' : ''}`} />
         </button>
@@ -394,7 +394,7 @@ function ProductsContent() {
           <div className="flex items-center gap-2.5 overflow-x-auto hide-scrollbar">
             <button
               onClick={() => switchCategory(undefined)}
-              className={`flex items-center gap-2 h-10 px-5 text-[11px] font-bold tracking-[0.12em] uppercase whitespace-nowrap transition-all border ${
+              className={`flex items-center gap-2 h-10 px-5 text-[11px] font-bold tracking-[0.12em] uppercase whitespace-nowrap transition-all border rounded-md ${
                 !query.category ? 'border-[#2D1F1F] bg-[#2D1F1F] text-white' : 'border-[#2D1F1F]/15 text-[#2D1F1F]/60 hover:border-[#2D1F1F]/40'
               }`}
             >
@@ -406,7 +406,7 @@ function ProductsContent() {
                 <button
                   key={cat.id}
                   onClick={() => switchCategory(cat.slug)}
-                  className={`flex items-center gap-2 h-10 px-5 text-[11px] font-bold tracking-[0.12em] uppercase whitespace-nowrap transition-all border ${
+                  className={`flex items-center gap-2 h-10 px-5 text-[11px] font-bold tracking-[0.12em] uppercase whitespace-nowrap transition-all border rounded-md ${
                     active ? 'border-[#C9A84C] bg-[#C9A84C] text-white shadow-gold' : 'border-[#2D1F1F]/15 text-[#2D1F1F]/60 hover:border-[#C9A84C] hover:text-[#2D1F1F]'
                   }`}
                 >
@@ -436,7 +436,7 @@ function ProductsContent() {
                   <button
                     key={sub.id}
                     onClick={() => switchSubCategory(sub.slug)}
-                    className={`h-8 px-4 text-[11px] font-semibold tracking-wide whitespace-nowrap rounded-full border transition-colors ${
+                    className={`h-8 px-4 text-[11px] font-semibold tracking-wide whitespace-nowrap rounded-md border transition-colors ${
                       active ? 'border-[#C9A84C] bg-[#C9A84C]/10 text-[#C9A84C]' : 'border-[#2D1F1F]/15 text-[#2D1F1F]/60 hover:border-[#C9A84C]'
                     }`}
                   >
@@ -458,14 +458,14 @@ function ProductsContent() {
           <div className={`flex items-center gap-3 min-w-0 ${isRTL ? 'flex-row-reverse' : ''}`}>
             <button
               onClick={() => setIsFilterOpen(!isFilterOpen)}
-              className={`flex items-center gap-2 h-9 px-4 border text-[11px] font-bold tracking-[0.12em] uppercase transition-colors flex-shrink-0 ${
+              className={`flex items-center gap-2 h-9 px-4 border rounded-md text-[11px] font-bold tracking-[0.12em] uppercase transition-colors flex-shrink-0 ${
                 isFilterOpen ? 'border-[#2D1F1F] bg-[#2D1F1F] text-white' : 'border-[#2D1F1F]/20 text-[#2D1F1F]/70 hover:border-[#2D1F1F]/50'
               }`}
             >
               <SlidersHorizontal size={12} />
               {t.filters.filters}
               {activeCount > 0 && (
-                <span className="w-4 h-4 bg-[#C9A84C] text-white text-[9px] font-black flex items-center justify-center">{activeCount}</span>
+                <span className="w-4 h-4 bg-[#C9A84C] text-white text-[9px] font-black flex items-center justify-center rounded-sm">{activeCount}</span>
               )}
             </button>
 
@@ -474,7 +474,7 @@ function ProductsContent() {
               {query.brands?.map(slug => {
                 const brand = brandList.find(b => b.slug === slug);
                 return (
-                  <button key={slug} onClick={() => toggleBrand(slug)} className="flex items-center gap-1.5 h-7 px-3 bg-[#2D1F1F]/6 text-[#2D1F1F] text-[10px] font-bold tracking-wide uppercase whitespace-nowrap hover:bg-[#2D1F1F]/12">
+                  <button key={slug} onClick={() => toggleBrand(slug)} className="flex items-center gap-1.5 h-7 px-3 bg-[#2D1F1F]/6 text-[#2D1F1F] text-[10px] font-bold tracking-wide uppercase whitespace-nowrap rounded-md hover:bg-[#2D1F1F]/12">
                     {brand ? (language === 'ar' ? brand.nameAr : brand.name) : slug}
                     <X size={9} />
                   </button>
@@ -482,24 +482,24 @@ function ProductsContent() {
               })}
               {Object.entries(query.attributes ?? {}).flatMap(([key, vals]) =>
                 vals.map(val => (
-                  <button key={`${key}-${val}`} onClick={() => toggleMulti(key, val)} className="flex items-center gap-1.5 h-7 px-3 bg-[#2D1F1F]/6 text-[#2D1F1F] text-[10px] font-bold tracking-wide uppercase whitespace-nowrap hover:bg-[#2D1F1F]/12">
+                  <button key={`${key}-${val}`} onClick={() => toggleMulti(key, val)} className="flex items-center gap-1.5 h-7 px-3 bg-[#2D1F1F]/6 text-[#2D1F1F] text-[10px] font-bold tracking-wide uppercase whitespace-nowrap rounded-md hover:bg-[#2D1F1F]/12">
                     {valueLabel(key, val)}
                     <X size={9} />
                   </button>
                 )),
               )}
               {query.rating !== undefined && (
-                <button onClick={() => setReserved('rating', undefined)} className="flex items-center gap-1.5 h-7 px-3 bg-[#2D1F1F]/6 text-[#2D1F1F] text-[10px] font-bold tracking-wide uppercase whitespace-nowrap hover:bg-[#2D1F1F]/12">
+                <button onClick={() => setReserved('rating', undefined)} className="flex items-center gap-1.5 h-7 px-3 bg-[#2D1F1F]/6 text-[#2D1F1F] text-[10px] font-bold tracking-wide uppercase whitespace-nowrap rounded-md hover:bg-[#2D1F1F]/12">
                   {query.rating}★+ <X size={9} />
                 </button>
               )}
               {priceActive && (
-                <button onClick={() => setRange('price', undefined, undefined)} className="flex items-center gap-1.5 h-7 px-3 bg-[#2D1F1F]/6 text-[#2D1F1F] text-[10px] font-bold tracking-wide uppercase whitespace-nowrap hover:bg-[#2D1F1F]/12">
+                <button onClick={() => setRange('price', undefined, undefined)} className="flex items-center gap-1.5 h-7 px-3 bg-[#2D1F1F]/6 text-[#2D1F1F] text-[10px] font-bold tracking-wide uppercase whitespace-nowrap rounded-md hover:bg-[#2D1F1F]/12">
                   OMR {query.priceMin ?? 0}–{query.priceMax ?? PRICE_MAX} <X size={9} />
                 </button>
               )}
               {query.hasDiscount && (
-                <button onClick={() => toggleBoolean('has_discount')} className="flex items-center gap-1.5 h-7 px-3 bg-[#2D1F1F]/6 text-[#2D1F1F] text-[10px] font-bold tracking-wide uppercase whitespace-nowrap hover:bg-[#2D1F1F]/12">
+                <button onClick={() => toggleBoolean('has_discount')} className="flex items-center gap-1.5 h-7 px-3 bg-[#2D1F1F]/6 text-[#2D1F1F] text-[10px] font-bold tracking-wide uppercase whitespace-nowrap rounded-md hover:bg-[#2D1F1F]/12">
                   {language === 'ar' ? 'عرض' : 'Offer'} <X size={9} />
                 </button>
               )}
@@ -516,7 +516,7 @@ function ProductsContent() {
             <select
               value={query.sort ?? 'popular'}
               onChange={e => setSort(e.target.value as SortOption)}
-              className="h-9 pl-3 pr-8 bg-transparent border border-[#2D1F1F]/20 text-[11px] font-bold tracking-[0.1em] uppercase appearance-none cursor-pointer hover:border-[#C9A84C] focus:outline-none focus:border-[#C9A84C] text-[#2D1F1F]"
+              className="h-9 pl-3 pr-8 bg-transparent border border-[#2D1F1F]/20 rounded-md text-[11px] font-bold tracking-[0.1em] uppercase appearance-none cursor-pointer hover:border-[#C9A84C] focus:outline-none focus:border-[#C9A84C] text-[#2D1F1F]"
             >
               {sortOptions.map(opt => <option key={opt.value} value={opt.value}>{opt.label}</option>)}
             </select>
@@ -537,7 +537,7 @@ function ProductsContent() {
                 <p className="text-4xl font-serif text-[#2D1F1F]/10 mb-6">—</p>
                 <h3 className="text-xl font-serif text-[#2D1F1F] mb-3">{language === 'en' ? 'No products found' : 'لا توجد منتجات'}</h3>
                 <p className="text-[#2D1F1F]/45 text-sm mb-8">{language === 'en' ? 'Try adjusting your filters' : 'حاول تعديل الفلاتر'}</p>
-                <button onClick={clearAll} className="px-8 py-3 border border-[#2D1F1F] text-[11px] font-black tracking-[0.25em] uppercase text-[#2D1F1F] hover:bg-[#2D1F1F] hover:text-white transition-colors">
+                <button onClick={clearAll} className="px-8 py-3 border border-[#2D1F1F] rounded-md text-[11px] font-black tracking-[0.25em] uppercase text-[#2D1F1F] hover:bg-[#2D1F1F] hover:text-white transition-colors">
                   {t.filters.clearAll}
                 </button>
               </div>
@@ -592,10 +592,10 @@ function ProductsContent() {
               <div className="overflow-y-auto px-7 sm:px-8 py-6 flex-1">{filterPanelContent}</div>
 
               <div className="flex gap-3 px-7 sm:px-8 py-4 border-t border-[#2D1F1F]/8 flex-shrink-0 bg-white">
-                <button onClick={clearAll} className="h-12 px-5 border border-[#2D1F1F]/20 text-[11px] font-bold tracking-[0.15em] uppercase text-[#2D1F1F]/70 hover:border-[#2D1F1F]/50 transition-colors">
+                <button onClick={clearAll} className="h-12 px-5 border border-[#2D1F1F]/20 rounded-md text-[11px] font-bold tracking-[0.15em] uppercase text-[#2D1F1F]/70 hover:border-[#2D1F1F]/50 transition-colors">
                   {t.filters.clearAll}
                 </button>
-                <button onClick={() => setIsFilterOpen(false)} className="flex-1 h-12 bg-[#2D1F1F] text-white text-[11px] font-black tracking-[0.2em] uppercase hover:bg-[#C9A84C] transition-colors">
+                <button onClick={() => setIsFilterOpen(false)} className="flex-1 h-12 bg-[#2D1F1F] text-white text-[11px] font-black tracking-[0.2em] uppercase rounded-md hover:bg-[#C9A84C] transition-colors">
                   {language === 'ar' ? `عرض ${items.length} منتج` : `Show ${items.length} results`}
                 </button>
               </div>

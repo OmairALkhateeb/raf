@@ -3,9 +3,8 @@
 @tailwind utilities;
 
 :root {
-  --font-inter: 'Inter', system-ui, sans-serif;
-  --font-playfair: 'Playfair Display', Georgia, serif;
-  --font-cairo: 'Cairo', Arial, sans-serif;
+  /* --font-inter / --font-playfair / --font-cairo are now provided by
+     next/font (see app/layout.tsx) and scoped to the <html> element. */
 
   --color-gold: #C9A84C;
   --color-gold-light: #E8D5A3;
@@ -13,6 +12,15 @@
   --color-cream: #FAF7F2;
   --scrollbar-thumb: #C9A84C;
   --scrollbar-track: #FAF7F2;
+
+  /* Premium "soft luxury" radius scale. Mirrors the Tailwind borderRadius
+     theme so any non-utility CSS (or inline style) stays consistent. */
+  --radius-sm: 6px;   /* tiny pills */
+  --radius-md: 8px;   /* buttons, badges, inputs */
+  --radius-lg: 10px;  /* larger buttons */
+  --radius-xl: 14px;  /* product / content cards */
+  --radius-2xl: 18px; /* large promo banners, modals */
+  --radius-3xl: 24px; /* rare hero-tier surfaces */
 }
 
 * {
@@ -25,20 +33,48 @@ html {
   scroll-behavior: smooth;
 }
 
-html[dir="rtl"] body {
-  font-family: 'Cairo', Arial, sans-serif;
-}
-
-html[dir="ltr"] body {
-  font-family: 'Inter', system-ui, sans-serif;
-}
-
+/* Single global font chain.
+   Browsers pick the first family that has a glyph for each character, so
+   Latin characters render in Inter while Arabic characters render in Cairo
+   — no manual RTL/LTR switching required, and nothing ever falls back to
+   the platform default font. */
 body {
+  font-family: var(--font-inter), var(--font-cairo), system-ui, -apple-system,
+    "Segoe UI", Arial, sans-serif;
   background-color: #FAF7F2;
   color: #1a1a1a;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Form controls inherit the page font instead of falling back to the
+   browser's default (Times / Helvetica). Without this, inputs across the
+   site picked up the system font and broke visual consistency. */
+button,
+input,
+select,
+textarea,
+optgroup {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+}
+
+/* Playfair Display has no Arabic glyphs — when rendering Arabic text the
+   browser would otherwise drop to the default serif (Times New Roman),
+   which is what the user was seeing on banner / hero / category headings.
+   Cairo is included in the fallback chain so Arabic characters in any
+   `.font-serif` heading render in Cairo instead. */
+.font-serif {
+  font-family: var(--font-playfair), var(--font-cairo), Georgia, serif;
+}
+
+/* In Arabic, the editorial serif look (Playfair) simply isn't reachable —
+   use Cairo Bold throughout for a confident, unified Arabic heading style. */
+html[dir="rtl"] .font-serif {
+  font-family: var(--font-cairo), Arial, sans-serif;
 }
 
 ::-webkit-scrollbar { width: 6px; height: 6px; }

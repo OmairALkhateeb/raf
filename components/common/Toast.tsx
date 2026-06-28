@@ -17,7 +17,7 @@ export default function ToastContainer() {
             animate={{ opacity: 1, x: 0, scale: 1 }}
             exit={{ opacity: 0, x: 80, scale: 0.9 }}
             transition={{ type: 'spring', stiffness: 300, damping: 25 }}
-            className={`flex items-center gap-3 px-4 py-3 shadow-modal text-white text-sm font-medium pointer-events-auto max-w-xs
+            className={`flex items-center gap-3 px-4 py-3 rounded-md shadow-modal text-white text-sm font-medium pointer-events-auto max-w-xs
               ${toast.type === 'success' ? 'bg-[#2D1F1F]' : ''}
               ${toast.type === 'error' ? 'bg-red-600' : ''}
               ${toast.type === 'info' ? 'bg-blue-600' : ''}

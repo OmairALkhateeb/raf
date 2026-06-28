@@ -47,7 +47,7 @@ export default function BrandsIndex({ brands }: BrandsIndexProps) {
                 viewport={{ once: true, margin: '-40px' }}
                 transition={{ delay: (i % 3) * 0.08, duration: 0.45 }}
               >
-                <Link href={`/brands/${brand.slug}`} className="group block bg-white overflow-hidden shadow-[0_2px_24px_rgba(0,0,0,0.05)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.12)] transition-shadow duration-300">
+                <Link href={`/brands/${brand.slug}`} className="group block bg-white overflow-hidden shadow-[0_2px_24px_rgba(0,0,0,0.05)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.12)] transition-shadow duration-300 rounded-2xl">
                   {/* Banner */}
                   <div className="relative h-36 overflow-hidden" style={{ backgroundColor: brand.accentColor ?? '#2D1F1F' }}>
                     {brand.banner && (
@@ -57,7 +57,7 @@ export default function BrandsIndex({ brands }: BrandsIndexProps) {
                   </div>
                   {/* Logo + identity */}
                   <div className="px-6 pb-6">
-                    <div className="w-16 h-16 -mt-9 mb-3 bg-white shadow-md ring-1 ring-black/5 overflow-hidden">
+                    <div className="w-16 h-16 -mt-9 mb-3 bg-white shadow-md ring-1 ring-black/5 overflow-hidden rounded-lg">
                       <Image src={brand.logo} alt={name} width={64} height={64} className="w-full h-full object-cover" />
                     </div>
                     <h2 className="text-lg font-serif text-[#2D1F1F] group-hover:text-[#C9A84C] transition-colors">{name}</h2>

@@ -14,7 +14,7 @@ const cx = 'max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16';
 type Step = 'contact' | 'shipping' | 'payment' | 'review';
 const STEPS: Step[] = ['contact', 'shipping', 'payment', 'review'];
 
-const inputClass = 'w-full h-11 px-4 border border-[#2D1F1F]/15 bg-[#FAF7F2] text-sm text-[#2D1F1F] placeholder-[#2D1F1F]/30 focus:outline-none focus:border-[#C9A84C] transition-colors';
+const inputClass = 'w-full h-11 px-4 border border-[#2D1F1F]/15 bg-[#FAF7F2] text-sm text-[#2D1F1F] placeholder-[#2D1F1F]/30 rounded-md focus:outline-none focus:border-[#C9A84C] transition-colors';
 const labelClass = 'block text-[10px] font-black tracking-[0.2em] uppercase text-[#2D1F1F]/45 mb-2';
 
 export default function CheckoutPage() {
@@ -92,7 +92,7 @@ export default function CheckoutPage() {
             {STEPS.map((s, i) => (
               <div key={s} className={`flex items-center ${isRTL ? 'flex-row-reverse' : ''}`}>
                 <div className={`flex items-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
-                  <div className={`w-6 h-6 flex items-center justify-center text-[10px] font-black border transition-all ${
+                  <div className={`w-6 h-6 flex items-center justify-center text-[10px] font-black border rounded-md transition-all ${
                     i < stepIndex
                       ? 'border-[#C9A84C] bg-[#C9A84C] text-white'
                       : i === stepIndex
@@ -124,7 +124,7 @@ export default function CheckoutPage() {
               {/* Contact */}
               {step === 'contact' && (
                 <motion.div key="contact" initial={{ opacity: 0, x: 24 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -24 }}>
-                  <div className="border border-[#2D1F1F]/8 p-8">
+                  <div className="border border-[#2D1F1F]/8 rounded-xl p-8">
                     <h2 className="text-[10px] font-black tracking-[0.3em] uppercase text-[#2D1F1F]/50 mb-7">{t.checkout.contactInfo}</h2>
                     <div className="grid sm:grid-cols-2 gap-5">
                       {[
@@ -150,7 +150,7 @@ export default function CheckoutPage() {
               {/* Shipping */}
               {step === 'shipping' && (
                 <motion.div key="shipping" initial={{ opacity: 0, x: 24 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -24 }}>
-                  <div className="border border-[#2D1F1F]/8 p-8">
+                  <div className="border border-[#2D1F1F]/8 rounded-xl p-8">
                     <h2 className="text-[10px] font-black tracking-[0.3em] uppercase text-[#2D1F1F]/50 mb-7">{t.checkout.shippingAddress}</h2>
                     <div className="grid sm:grid-cols-2 gap-5">
                       {[
@@ -178,7 +178,7 @@ export default function CheckoutPage() {
               {/* Payment */}
               {step === 'payment' && (
                 <motion.div key="payment" initial={{ opacity: 0, x: 24 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -24 }}>
-                  <div className="border border-[#2D1F1F]/8 p-8">
+                  <div className="border border-[#2D1F1F]/8 rounded-xl p-8">
                     <h2 className="text-[10px] font-black tracking-[0.3em] uppercase text-[#2D1F1F]/50 mb-7">{t.checkout.paymentMethod}</h2>
                     <div className="space-y-3 mb-7">
                       {[
@@ -187,7 +187,7 @@ export default function CheckoutPage() {
                       ].map(opt => (
                         <label
                           key={opt.value}
-                          className={`flex items-center gap-4 p-5 border-2 cursor-pointer transition-all ${
+                          className={`flex items-center gap-4 p-5 border-2 rounded-lg cursor-pointer transition-all ${
                             paymentMethod === opt.value
                               ? 'border-[#C9A84C] bg-[#C9A84C]/5'
                               : 'border-[#2D1F1F]/12 hover:border-[#2D1F1F]/30'
@@ -235,14 +235,14 @@ export default function CheckoutPage() {
               {/* Review */}
               {step === 'review' && (
                 <motion.div key="review" initial={{ opacity: 0, x: 24 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -24 }}>
-                  <div className="border border-[#2D1F1F]/8 p-8">
+                  <div className="border border-[#2D1F1F]/8 rounded-xl p-8">
                     <h2 className="text-[10px] font-black tracking-[0.3em] uppercase text-[#2D1F1F]/50 mb-7">{t.checkout.orderReview}</h2>
                     <div className="space-y-4 mb-6">
                       {items.map(item => {
                         const name = language === 'ar' ? item.product.nameAr : item.product.name;
                         return (
                           <div key={item.product.id} className={`flex items-center gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
-                            <div className="relative w-16 h-16 overflow-hidden bg-[#F5F3EF] flex-shrink-0">
+                            <div className="relative w-16 h-16 overflow-hidden bg-[#F5F3EF] rounded-md flex-shrink-0">
                               <Image src={item.product.images[0]} alt={name} fill sizes="64px" className="object-cover" />
                             </div>
                             <div className="flex-1 min-w-0">
@@ -280,7 +280,7 @@ export default function CheckoutPage() {
               {stepIndex > 0 && (
                 <button
                   onClick={() => setStep(STEPS[stepIndex - 1])}
-                  className={`flex items-center gap-2 px-6 h-12 border border-[#2D1F1F]/20 text-[11px] font-black tracking-[0.2em] uppercase text-[#2D1F1F]/60 hover:border-[#2D1F1F] hover:text-[#2D1F1F] transition-colors ${isRTL ? 'flex-row-reverse' : ''}`}
+                  className={`flex items-center gap-2 px-6 h-12 border border-[#2D1F1F]/20 rounded-md text-[11px] font-black tracking-[0.2em] uppercase text-[#2D1F1F]/60 hover:border-[#2D1F1F] hover:text-[#2D1F1F] transition-colors ${isRTL ? 'flex-row-reverse' : ''}`}
                 >
                   <ArrowLeft size={13} className={isRTL ? 'rtl-flip' : ''} />
                   {t.checkout.back}
@@ -289,7 +289,7 @@ export default function CheckoutPage() {
               {step !== 'review' ? (
                 <button
                   onClick={next}
-                  className={`flex-1 h-12 bg-[#2D1F1F] text-white text-[11px] font-black tracking-[0.25em] uppercase flex items-center justify-center gap-2.5 hover:bg-[#C9A84C] transition-colors ${isRTL ? 'flex-row-reverse' : ''}`}
+                  className={`flex-1 h-12 bg-[#2D1F1F] text-white text-[11px] font-black tracking-[0.25em] uppercase flex items-center justify-center gap-2.5 rounded-md hover:bg-[#C9A84C] transition-colors ${isRTL ? 'flex-row-reverse' : ''}`}
                 >
                   {t.checkout.next}
                   <ChevronRight size={14} className={isRTL ? 'rtl-flip' : ''} />
@@ -298,7 +298,7 @@ export default function CheckoutPage() {
                 <motion.button
                   whileTap={{ scale: 0.97 }}
                   onClick={handlePlaceOrder}
-                  className={`flex-1 h-12 bg-[#C9A84C] text-[#2D1F1F] text-[11px] font-black tracking-[0.25em] uppercase flex items-center justify-center gap-2.5 hover:bg-[#2D1F1F] hover:text-white transition-colors ${isRTL ? 'flex-row-reverse' : ''}`}
+                  className={`flex-1 h-12 bg-[#C9A84C] text-[#2D1F1F] text-[11px] font-black tracking-[0.25em] uppercase flex items-center justify-center gap-2.5 rounded-md hover:bg-[#2D1F1F] hover:text-white transition-colors ${isRTL ? 'flex-row-reverse' : ''}`}
                 >
                   <Lock size={13} />
                   {t.checkout.placeOrder}
@@ -309,7 +309,7 @@ export default function CheckoutPage() {
 
           {/* Order summary sidebar */}
           <div>
-            <div className="border border-[#2D1F1F]/8 p-6 sticky top-24">
+            <div className="border border-[#2D1F1F]/8 rounded-xl p-6 sticky top-24">
               <h3 className="text-[10px] font-black tracking-[0.3em] uppercase text-[#2D1F1F]/50 mb-6">
                 {t.cart.orderSummary}
               </h3>

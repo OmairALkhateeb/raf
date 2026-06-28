@@ -64,7 +64,7 @@ export default function ProductCard({ product, onQuickView }: ProductCardProps) 
       <Link
         href={`/products/${product.id}`}
         onClick={() => addToRecentlyViewed(product)}
-        className="block relative overflow-hidden bg-[#F5F3EF]"
+        className="block relative overflow-hidden bg-[#F5F3EF] rounded-xl"
         style={{ aspectRatio: '4/5' }}
       >
         {/* Skeleton shimmer */}
@@ -94,17 +94,17 @@ export default function ProductCard({ product, onQuickView }: ProductCardProps) 
         {/* Badges — top left */}
         <div className={`absolute top-3 z-10 flex flex-col gap-1.5 ${isRTL ? 'right-3' : 'left-3'}`}>
           {product.discount && product.discount > 0 && (
-            <span className="px-2.5 py-0.5 bg-[#C9A84C] text-white text-[10px] font-bold tracking-widest uppercase">
+            <span className="px-2.5 py-0.5 bg-[#C9A84C] text-white text-[10px] font-bold tracking-widest uppercase rounded-md">
               −{product.discount}%
             </span>
           )}
           {product.isNew && (
-            <span className="px-2.5 py-0.5 bg-[#2D1F1F] text-[#E8D5A3] text-[10px] font-bold tracking-widest uppercase">
+            <span className="px-2.5 py-0.5 bg-[#2D1F1F] text-[#E8D5A3] text-[10px] font-bold tracking-widest uppercase rounded-md">
               New
             </span>
           )}
           {product.isBestseller && !product.isNew && !product.discount && (
-            <span className="px-2.5 py-0.5 bg-white/90 text-[#2D1F1F] text-[10px] font-bold tracking-widest uppercase border border-[#2D1F1F]/15">
+            <span className="px-2.5 py-0.5 bg-white/90 text-[#2D1F1F] text-[10px] font-bold tracking-widest uppercase border border-[#2D1F1F]/15 rounded-md">
               Best
             </span>
           )}
@@ -140,7 +140,7 @@ export default function ProductCard({ product, onQuickView }: ProductCardProps) 
               <motion.button
                 onClick={handleAddToCart}
                 disabled={!product.inStock}
-                className={`flex-1 flex items-center justify-center gap-2 h-10 text-[11px] font-bold tracking-widest uppercase transition-colors ${
+                className={`flex-1 flex items-center justify-center gap-2 h-10 text-[11px] font-bold tracking-widest uppercase rounded-md transition-colors ${
                   inCart
                     ? 'bg-[#2D1F1F] text-[#C9A84C]'
                     : 'bg-[#C9A84C] text-white hover:bg-[#b8943f]'
@@ -155,7 +155,7 @@ export default function ProductCard({ product, onQuickView }: ProductCardProps) 
               {onQuickView && (
                 <motion.button
                   onClick={handleQuickView}
-                  className="w-10 h-10 bg-white/15 backdrop-blur-sm border border-white/30 text-white flex items-center justify-center hover:bg-white/30 transition-colors"
+                  className="w-10 h-10 bg-white/15 backdrop-blur-sm border border-white/30 text-white flex items-center justify-center rounded-md hover:bg-white/30 transition-colors"
                   whileTap={{ scale: 0.92 }}
                   title="Quick View"
                 >
@@ -169,7 +169,7 @@ export default function ProductCard({ product, onQuickView }: ProductCardProps) 
         {/* Out of stock */}
         {!product.inStock && (
           <div className="absolute inset-0 z-20 bg-white/55 backdrop-blur-[2px] flex items-center justify-center">
-            <span className="px-5 py-1.5 bg-[#2D1F1F] text-white text-xs font-bold tracking-widest uppercase">
+            <span className="px-5 py-1.5 bg-[#2D1F1F] text-white text-xs font-bold tracking-widest uppercase rounded-md">
               {language === 'ar' ? 'نفد المخزون' : 'Sold Out'}
             </span>
           </div>

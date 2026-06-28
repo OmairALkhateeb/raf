@@ -72,7 +72,7 @@ export default function BrandStore({ brand, products, related }: BrandStoreProps
         {/* Logo + identity lockup */}
         <div className="max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16">
           <div className={`relative -mt-16 sm:-mt-20 pb-8 flex flex-col sm:flex-row sm:items-end gap-5 ${isRTL ? 'sm:flex-row-reverse text-right' : ''}`}>
-            <div className="w-24 h-24 sm:w-32 sm:h-32 flex-shrink-0 bg-white shadow-[0_12px_32px_rgba(0,0,0,0.25)] ring-1 ring-black/5 overflow-hidden">
+            <div className="w-24 h-24 sm:w-32 sm:h-32 flex-shrink-0 bg-white shadow-[0_12px_32px_rgba(0,0,0,0.25)] ring-1 ring-black/5 overflow-hidden rounded-xl">
               <Image src={brand.logo} alt={name} width={128} height={128} className="w-full h-full object-cover" />
             </div>
             <div className="flex-1 sm:pb-2">
@@ -109,7 +109,7 @@ export default function BrandStore({ brand, products, related }: BrandStoreProps
             <div className="flex items-center gap-2 overflow-x-auto hide-scrollbar">
               <button
                 onClick={() => setActiveCat(null)}
-                className={`h-9 px-4 text-[11px] font-bold tracking-wide whitespace-nowrap rounded-full border transition-colors ${
+                className={`h-9 px-4 text-[11px] font-bold tracking-wide whitespace-nowrap rounded-md border transition-colors ${
                   !activeCat ? 'border-[#C9A84C] bg-[#C9A84C] text-white' : 'border-[#2D1F1F]/15 text-[#2D1F1F]/60 hover:border-[#C9A84C]'
                 }`}
               >
@@ -121,7 +121,7 @@ export default function BrandStore({ brand, products, related }: BrandStoreProps
                   <button
                     key={chip.id}
                     onClick={() => setActiveCat(chip.id)}
-                    className={`h-9 px-4 text-[11px] font-bold tracking-wide whitespace-nowrap rounded-full border transition-colors ${
+                    className={`h-9 px-4 text-[11px] font-bold tracking-wide whitespace-nowrap rounded-md border transition-colors ${
                       active ? 'border-[#C9A84C] bg-[#C9A84C]/10 text-[#C9A84C]' : 'border-[#2D1F1F]/15 text-[#2D1F1F]/60 hover:border-[#C9A84C]'
                     }`}
                   >

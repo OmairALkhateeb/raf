@@ -44,19 +44,19 @@ export default function AccountPage() {
           {/* Sidebar */}
           <div className="space-y-5">
             {/* Profile card */}
-            <div className="border border-[#2D1F1F]/8 p-8 text-center">
-              <div className="relative w-20 h-20 overflow-hidden mx-auto mb-4 ring-2 ring-[#C9A84C] ring-offset-2">
+            <div className="border border-[#2D1F1F]/8 rounded-xl p-8 text-center">
+              <div className="relative w-20 h-20 overflow-hidden mx-auto mb-4 ring-2 ring-[#C9A84C] ring-offset-2 rounded-full">
                 <Image src={mockUser.avatar} alt={mockUser.name} fill className="object-cover" sizes="80px" />
               </div>
               <h2 className="text-base font-semibold text-[#2D1F1F]">{mockUser.name}</h2>
               <p className="text-xs text-[#2D1F1F]/45 mt-1">{mockUser.email}</p>
-              <span className="inline-block mt-3 px-3 py-1 bg-[#C9A84C]/10 text-[#C9A84C] text-[10px] font-black tracking-[0.15em] uppercase">
+              <span className="inline-block mt-3 px-3 py-1 bg-[#C9A84C]/10 text-[#C9A84C] text-[10px] font-black tracking-[0.15em] uppercase rounded-md">
                 {language === 'en' ? 'Premium Member' : 'عضو مميز'}
               </span>
             </div>
 
             {/* Nav */}
-            <div className="border border-[#2D1F1F]/8">
+            <div className="border border-[#2D1F1F]/8 rounded-xl overflow-hidden">
               {navItems.map((item, i) => (
                 <Link
                   key={i}
@@ -71,7 +71,7 @@ export default function AccountPage() {
                   </div>
                   <div className={`flex items-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
                     {'badge' in item && item.badge != null && (
-                      <span className="min-w-[18px] h-[18px] bg-[#C9A84C] text-white text-[9px] font-black flex items-center justify-center px-1">
+                      <span className="min-w-[18px] h-[18px] bg-[#C9A84C] text-white text-[9px] font-black flex items-center justify-center px-1 rounded-md">
                         {item.badge}
                       </span>
                     )}
@@ -89,7 +89,7 @@ export default function AccountPage() {
           {/* Main content */}
           <div className="space-y-8">
             {/* Stats */}
-            <div className="grid grid-cols-3 gap-0 border border-[#2D1F1F]/8">
+            <div className="grid grid-cols-3 gap-0 border border-[#2D1F1F]/8 rounded-xl overflow-hidden">
               {[
                 { label: language === 'en' ? 'Total Orders' : 'إجمالي الطلبات', value: mockOrders.length },
                 { label: language === 'en' ? 'Delivered' : 'تم التسليم', value: mockOrders.filter(o => o.status === 'delivered').length },
@@ -109,7 +109,7 @@ export default function AccountPage() {
             </div>
 
             {/* Orders */}
-            <div className="border border-[#2D1F1F]/8">
+            <div className="border border-[#2D1F1F]/8 rounded-xl overflow-hidden">
               <div className="flex items-center justify-between px-6 py-4 border-b border-[#2D1F1F]/8">
                 <h3 className="text-[10px] font-black tracking-[0.3em] uppercase text-[#2D1F1F]/50">
                   {t.account.orders}
@@ -133,7 +133,7 @@ export default function AccountPage() {
                             <p className="text-xs text-[#2D1F1F]/40 mt-0.5">{order.date}</p>
                           </div>
                           <div className={`flex items-center gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
-                            <span className={`px-3 py-1 text-[10px] font-black tracking-[0.12em] uppercase ${sc.bg} ${sc.text}`}>
+                            <span className={`px-3 py-1 text-[10px] font-black tracking-[0.12em] uppercase rounded-md ${sc.bg} ${sc.text}`}>
                               {sc.label}
                             </span>
                             <span className="text-sm font-bold text-[#2D1F1F]">
@@ -147,7 +147,7 @@ export default function AccountPage() {
                           {order.items.slice(0, 4).map(item => (
                             <div
                               key={item.product.id}
-                              className="relative w-14 h-14 overflow-hidden bg-[#F5F3EF] border border-[#2D1F1F]/8 flex-shrink-0"
+                              className="relative w-14 h-14 overflow-hidden bg-[#F5F3EF] border border-[#2D1F1F]/8 rounded-md flex-shrink-0"
                             >
                               <Image
                                 src={item.product.images[0]}
@@ -159,7 +159,7 @@ export default function AccountPage() {
                             </div>
                           ))}
                           {order.items.length > 4 && (
-                            <div className="w-14 h-14 border border-[#2D1F1F]/8 flex items-center justify-center text-xs font-bold text-[#2D1F1F]/40 bg-[#FAF7F2]">
+                            <div className="w-14 h-14 border border-[#2D1F1F]/8 rounded-md flex items-center justify-center text-xs font-bold text-[#2D1F1F]/40 bg-[#FAF7F2]">
                               +{order.items.length - 4}
                             </div>
                           )}
@@ -179,7 +179,7 @@ export default function AccountPage() {
             </div>
 
             {/* Addresses */}
-            <div className="border border-[#2D1F1F]/8">
+            <div className="border border-[#2D1F1F]/8 rounded-xl overflow-hidden">
               <div className="flex items-center justify-between px-6 py-4 border-b border-[#2D1F1F]/8">
                 <h3 className="text-[10px] font-black tracking-[0.3em] uppercase text-[#2D1F1F]/50">
                   {t.account.addresses}
@@ -199,7 +199,7 @@ export default function AccountPage() {
                         <div className={`flex items-center gap-3 mb-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
                           <span className="text-sm font-bold text-[#2D1F1F]">{addr.label}</span>
                           {addr.isDefault && (
-                            <span className="px-2.5 py-0.5 bg-[#C9A84C]/10 text-[#C9A84C] text-[9px] font-black tracking-[0.15em] uppercase">
+                            <span className="px-2.5 py-0.5 bg-[#C9A84C]/10 text-[#C9A84C] text-[9px] font-black tracking-[0.15em] uppercase rounded-md">
                               {t.account.defaultAddress}
                             </span>
                           )}

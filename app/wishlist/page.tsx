@@ -47,7 +47,7 @@ export default function WishlistPage() {
           </p>
           <Link
             href="/products"
-            className="inline-flex items-center gap-3 bg-[#2D1F1F] text-white px-10 py-3.5 text-[11px] font-black tracking-[0.25em] uppercase hover:bg-[#C9A84C] transition-colors duration-300"
+            className="inline-flex items-center gap-3 bg-[#2D1F1F] text-white px-10 py-3.5 text-[11px] font-black tracking-[0.25em] uppercase rounded-md hover:bg-[#C9A84C] transition-colors duration-300"
           >
             {language === 'en' ? 'Explore Products' : 'استكشف المنتجات'}
             <ArrowRight size={14} className={isRTL ? 'rtl-flip' : ''} />

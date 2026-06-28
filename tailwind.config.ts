@@ -49,8 +49,12 @@ const config: Config = {
         },
       },
       fontFamily: {
-        sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
-        serif: ['var(--font-playfair)', 'Georgia', 'serif'],
+        // Inter for Latin glyphs, Cairo as the next family so Arabic glyphs
+        // never fall through to the platform default font.
+        sans: ['var(--font-inter)', 'var(--font-cairo)', 'system-ui', 'sans-serif'],
+        // Playfair Display is Latin-only — Cairo handles Arabic characters in
+        // any `.font-serif` heading instead of dropping to Times New Roman.
+        serif: ['var(--font-playfair)', 'var(--font-cairo)', 'Georgia', 'serif'],
         arabic: ['var(--font-cairo)', 'Arial', 'sans-serif'],
       },
       animation: {
@@ -85,6 +89,32 @@ const config: Config = {
         'header': '0 2px 20px rgba(0, 0, 0, 0.06)',
         'modal': '0 25px 50px rgba(0, 0, 0, 0.25)',
         'gold': '0 4px 14px rgba(201, 168, 76, 0.4)',
+      },
+      /**
+       * Premium "soft luxury" radius scale.
+       *
+       * Replaces Tailwind's default scale so every existing `rounded-*`
+       * class snaps to a consistent, on-brand value. The scale stays subtle
+       * — nothing here is pill-shaped or cartoonish.
+       *
+       *   sm   →  6px : tiny pills, the softest possible nudge
+       *   md   →  8px : buttons, badges, inputs, chips         ← default tier
+       *   lg   → 10px : larger buttons, payment option blocks
+       *   xl   → 14px : product cards, content cards, panels
+       *   2xl  → 18px : large promo / banner cards, modals
+       *   3xl  → 24px : rare hero-tier surfaces
+       *   full → 9999 : circular icons only (wishlist heart, dots, avatars)
+       */
+      borderRadius: {
+        none: '0',
+        sm: '6px',
+        DEFAULT: '8px',
+        md: '8px',
+        lg: '10px',
+        xl: '14px',
+        '2xl': '18px',
+        '3xl': '24px',
+        full: '9999px',
       },
       backgroundImage: {
         'gold-gradient': 'linear-gradient(135deg, #C9A84C 0%, #E8D5A3 50%, #C9A84C 100%)',
