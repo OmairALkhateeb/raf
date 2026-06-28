@@ -20,15 +20,25 @@ export default function Footer() {
             </span>
             <h3 className="text-2xl sm:text-3xl font-serif text-white mb-3">{t.home.newsletter}</h3>
             <p className="text-sm text-white/40 mb-8 leading-relaxed">{t.home.newsletterDesc}</p>
+            {/*
+              Newsletter input + Subscribe button as a flush group.
+
+              In RTL we use `flex-row-reverse` so the button stays on the visual
+              RIGHT in both languages — this matches the existing design. Because
+              the visual layout is identical across languages, we round the
+              PHYSICAL outer sides (left of input, right of button). Logical
+              `rounded-s-*` / `rounded-e-*` would flip in RTL and round the
+              inner seam, creating an awkward notch where the two meet.
+            */}
             <form onSubmit={e => e.preventDefault()} className={`flex gap-0 max-w-md mx-auto ${isRTL ? 'flex-row-reverse' : ''}`}>
               <input
                 type="email"
                 placeholder={t.home.emailPlaceholder}
-                className={`flex-1 h-12 bg-white/6 border border-white/15 text-sm text-white placeholder-white/25 focus:outline-none focus:border-[#C9A84C] transition-colors ${isRTL ? 'pr-4 text-right' : 'pl-4'}`}
+                className={`flex-1 h-12 bg-white/6 border border-white/15 text-sm text-white placeholder-white/25 focus:outline-none focus:border-[#C9A84C] transition-colors rounded-l-md ${isRTL ? 'pr-4 text-right' : 'pl-4'}`}
               />
               <button
                 type="submit"
-                className="h-12 px-7 bg-[#C9A84C] text-[#2D1F1F] text-[11px] font-black tracking-widest uppercase hover:bg-white transition-colors duration-200 whitespace-nowrap flex-shrink-0"
+                className="h-12 px-7 bg-[#C9A84C] text-[#2D1F1F] text-[11px] font-black tracking-widest uppercase rounded-r-md hover:bg-white transition-colors duration-200 whitespace-nowrap flex-shrink-0"
               >
                 {t.home.subscribeBtn}
               </button>
@@ -50,7 +60,7 @@ export default function Footer() {
                 <a
                   key={i}
                   href="#"
-                  className="w-9 h-9 border border-white/15 flex items-center justify-center text-white/40 hover:border-[#C9A84C] hover:text-[#C9A84C] transition-all duration-200"
+                  className="w-9 h-9 border border-white/15 rounded-md flex items-center justify-center text-white/40 hover:border-[#C9A84C] hover:text-[#C9A84C] transition-all duration-200"
                 >
                   <Icon size={14} />
                 </a>

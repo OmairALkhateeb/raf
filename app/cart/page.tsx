@@ -51,7 +51,7 @@ export default function CartPage() {
           <p className="text-[#2D1F1F]/45 text-sm mb-10 max-w-xs mx-auto leading-relaxed">{t.cart.emptyDesc}</p>
           <Link
             href="/products"
-            className="inline-flex items-center gap-3 bg-[#2D1F1F] text-white px-10 py-3.5 text-[11px] font-black tracking-[0.25em] uppercase hover:bg-[#C9A84C] transition-colors duration-300"
+            className="inline-flex items-center gap-3 bg-[#2D1F1F] text-white px-10 py-3.5 text-[11px] font-black tracking-[0.25em] uppercase rounded-md hover:bg-[#C9A84C] transition-colors duration-300"
           >
             {t.cart.continueShopping}
             <ArrowRight size={14} className={isRTL ? 'rtl-flip' : ''} />
@@ -101,7 +101,7 @@ export default function CartPage() {
                     >
                       {/* Image */}
                       <Link href={`/products/${item.product.id}`} className="flex-shrink-0">
-                        <div className="relative w-24 h-28 sm:w-28 sm:h-32 overflow-hidden bg-[#F5F3EF]">
+                        <div className="relative w-24 h-28 sm:w-28 sm:h-32 overflow-hidden bg-[#F5F3EF] rounded-md">
                           <Image
                             src={item.product.images[0]}
                             alt={name}
@@ -129,7 +129,7 @@ export default function CartPage() {
 
                         <div className={`flex items-center justify-between mt-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
                           {/* Quantity controls */}
-                          <div className={`flex items-center border border-[#2D1F1F]/15 ${isRTL ? 'flex-row-reverse' : ''}`}>
+                          <div className={`flex items-center border border-[#2D1F1F]/15 rounded-md overflow-hidden ${isRTL ? 'flex-row-reverse' : ''}`}>
                             <button
                               onClick={() => updateQuantity(item.product.id, item.quantity - 1)}
                               className="w-9 h-9 flex items-center justify-center text-[#2D1F1F]/60 hover:text-[#2D1F1F] hover:bg-[#2D1F1F]/5 transition-colors"
@@ -181,26 +181,33 @@ export default function CartPage() {
           {/* Order summary */}
           <div>
             {/* Promo code */}
-            <div className="border border-[#2D1F1F]/8 p-6 mb-5">
+            <div className="border border-[#2D1F1F]/8 rounded-xl p-6 mb-5">
               <h3 className="text-[10px] font-black tracking-[0.3em] uppercase text-[#2D1F1F]/50 mb-4 flex items-center gap-2">
                 <Tag size={11} className="text-[#C9A84C]" />
                 {t.cart.promo}
               </h3>
               <div className="flex gap-0">
+                {/*
+                  Promo input + Apply button as a flush group. This form does NOT
+                  use `flex-row-reverse`, so the visual order naturally flips with
+                  `dir`. Logical sides therefore line up correctly: `border-e-0`
+                  removes the seam-side border, and `rounded-s-*` / `rounded-e-*`
+                  round the outer corners in both languages.
+                */}
                 <input
                   type="text"
                   value={promoCode}
                   onChange={e => setPromoCode(e.target.value.toUpperCase())}
                   placeholder="RAF15"
                   disabled={appliedPromo}
-                  className={`flex-1 h-10 px-4 border border-[#2D1F1F]/15 bg-[#FAF7F2] text-sm focus:outline-none focus:border-[#C9A84C] transition-colors text-[#2D1F1F] placeholder-[#2D1F1F]/25 border-r-0 ${
+                  className={`flex-1 h-10 px-4 border border-[#2D1F1F]/15 bg-[#FAF7F2] text-sm focus:outline-none focus:border-[#C9A84C] transition-colors text-[#2D1F1F] placeholder-[#2D1F1F]/25 border-e-0 rounded-s-md ${
                     appliedPromo ? 'text-[#C9A84C]' : ''
                   }`}
                 />
                 <button
                   onClick={applyPromo}
                   disabled={appliedPromo || !promoCode}
-                  className="h-10 px-5 bg-[#2D1F1F] text-white text-[11px] font-black tracking-[0.15em] uppercase hover:bg-[#C9A84C] transition-colors disabled:opacity-40"
+                  className="h-10 px-5 bg-[#2D1F1F] text-white text-[11px] font-black tracking-[0.15em] uppercase rounded-e-md hover:bg-[#C9A84C] transition-colors disabled:opacity-40"
                 >
                   {t.cart.apply}
                 </button>
@@ -213,7 +220,7 @@ export default function CartPage() {
             </div>
 
             {/* Summary card */}
-            <div className="border border-[#2D1F1F]/8 p-6 sticky top-24">
+            <div className="border border-[#2D1F1F]/8 rounded-xl p-6 sticky top-24">
               <h3 className="text-[10px] font-black tracking-[0.3em] uppercase text-[#2D1F1F]/50 mb-6">
                 {t.cart.orderSummary}
               </h3>
@@ -240,7 +247,7 @@ export default function CartPage() {
                   <span className="font-medium text-[#2D1F1F]">OMR {tax.toFixed(3)}</span>
                 </div>
                 {shipping === 0 && (
-                  <p className="text-[11px] text-[#C9A84C] bg-[#C9A84C]/8 px-3 py-2 text-center">
+                  <p className="text-[11px] text-[#C9A84C] bg-[#C9A84C]/8 px-3 py-2 text-center rounded-md">
                     {t.cart.shippingNote}
                   </p>
                 )}
@@ -255,7 +262,7 @@ export default function CartPage() {
 
               <Link
                 href="/checkout"
-                className="flex w-full h-13 items-center justify-center gap-3 bg-[#2D1F1F] text-white text-[11px] font-black tracking-[0.25em] uppercase hover:bg-[#C9A84C] transition-colors duration-300"
+                className="flex w-full h-13 items-center justify-center gap-3 bg-[#2D1F1F] text-white text-[11px] font-black tracking-[0.25em] uppercase rounded-md hover:bg-[#C9A84C] transition-colors duration-300"
                 style={{ height: 52 }}
               >
                 {t.cart.checkout}
