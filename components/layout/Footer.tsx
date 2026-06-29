@@ -145,7 +145,7 @@ export default function Footer() {
             className="group flex items-center gap-1.5 text-[11px] text-white/25 tracking-wide hover:text-white/45 transition-colors"
           >
             {language === 'ar' ? 'مُشغّل بواسطة' : 'Powered by'}
-            <span className="font-bold tracking-[0.15em] uppercase text-[#C9A84C] group-hover:text-white transition-colors">
+            <span className="font-bold tracking-[0.15em] uppercase latin-tracking text-[#C9A84C] group-hover:text-white transition-colors">
               AxisCore
             </span>
           </a>

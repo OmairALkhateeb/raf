@@ -142,7 +142,7 @@ export default function HeroCarousel({ banners }: HeroCarouselProps) {
                   className={`flex items-center gap-3 mb-3 sm:mb-5 ${isRTL ? 'flex-row-reverse' : ''}`}
                 >
                   <div className="w-10 sm:w-12 h-px bg-[#C9A84C]" />
-                  <span className="text-[#C9A84C] text-[10px] sm:text-[11px] font-black tracking-[0.35em] sm:tracking-[0.4em] uppercase">
+                  <span className="text-[#C9A84C] text-[10px] sm:text-[11px] font-black tracking-[0.35em] sm:tracking-[0.4em] uppercase latin-tracking">
                     RAF · Luxury Collection
                   </span>
                 </motion.div>

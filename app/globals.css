@@ -60,6 +60,47 @@ optgroup {
   font-size: inherit;
   line-height: inherit;
   color: inherit;
+  letter-spacing: inherit;
+}
+
+/* ── Arabic / RTL typography ───────────────────────────────────────────────
+   Letter-spacing and uppercase transforms are Latin luxury patterns. Applied
+   to Arabic they break connected script and make words look fragmented.
+   Reset at the document level; override Tailwind tracking utilities below. */
+html[dir="rtl"],
+html[lang="ar"] {
+  letter-spacing: normal;
+}
+
+/* English-only decorative eyebrow labels (opt-in). Use on hardcoded Latin
+   strings that should keep luxury tracking even when the page is in Arabic. */
+@layer components {
+  .latin-tracking {
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+  }
+}
+
+@layer utilities {
+  /* Beat Tailwind `tracking-*` utilities (including arbitrary values like
+     `tracking-[0.45em]`) whenever the UI is in Arabic / RTL. */
+  html[dir="rtl"] [class*="tracking-"],
+  html[lang="ar"] [class*="tracking-"] {
+    letter-spacing: normal !important;
+  }
+
+  /* `uppercase` has no meaningful effect on Arabic and can distort labels. */
+  html[dir="rtl"] .uppercase,
+  html[lang="ar"] .uppercase {
+    text-transform: none !important;
+  }
+
+  /* Restore Latin luxury styling for explicitly marked English-only copy. */
+  html[dir="rtl"] .latin-tracking,
+  html[lang="ar"] .latin-tracking {
+    letter-spacing: 0.25em !important;
+    text-transform: uppercase !important;
+  }
 }
 
 /* Playfair Display has no Arabic glyphs — when rendering Arabic text the
