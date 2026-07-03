@@ -12,6 +12,7 @@ import { useWishlist } from '@/contexts/WishlistContext';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useApp } from '@/contexts/AppContext';
 import { products } from '@/data/products';
+import DeliveryLocationSelector from '@/components/layout/DeliveryLocationSelector';
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -62,6 +63,9 @@ export default function Header() {
           ? 'Free shipping on orders above OMR 10  ·  Use code RAF15 for 15% off'
           : 'شحن مجاني للطلبات فوق 10 ر.ع.  ·  كود RAF15 للخصم 15%'}
       </div>
+
+      {/* Delivery location bar */}
+      <DeliveryLocationSelector />
 
       <header
         dir={isRTL ? 'rtl' : 'ltr'}

@@ -67,10 +67,10 @@ export default function HeroCarousel({ banners }: HeroCarouselProps) {
 
   return (
     <div
-      // Mobile: short, elegant hero (~65vh, capped) so it never feels like a full-screen takeover.
-      // sm and up: original cinematic height (min(88vh, 780px), min 520px).
+      // Mobile-first: compact hero (~240px) so content below is visible without scrolling.
+      // sm and up: cinematic height preserved for desktop.
       className="relative w-full overflow-hidden bg-[#2D1F1F]
-        h-[65vh] min-h-[440px] max-h-[600px]
+        h-[240px] min-h-[220px] max-h-[280px]
         sm:h-[min(88vh,780px)] sm:min-h-[520px] sm:max-h-none"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
@@ -127,7 +127,7 @@ export default function HeroCarousel({ banners }: HeroCarouselProps) {
         <div
           className={`absolute inset-0 flex items-center ${isRTL ? 'justify-end' : 'justify-start'}`}
         >
-          <div className={`px-6 sm:px-16 lg:px-24 max-w-3xl ${isRTL ? 'text-right' : 'text-left'}`}>
+          <div className={`px-4 sm:px-16 lg:px-24 max-w-3xl ${isRTL ? 'text-right' : 'text-left'}`}>
             <AnimatePresence mode="wait">
               <motion.div
                 key={`content-${active}`}
@@ -139,7 +139,7 @@ export default function HeroCarousel({ banners }: HeroCarouselProps) {
                 {/* Overline label */}
                 <motion.div
                   variants={contentItem}
-                  className={`flex items-center gap-3 mb-3 sm:mb-5 ${isRTL ? 'flex-row-reverse' : ''}`}
+                  className={`hidden sm:flex items-center gap-3 mb-3 sm:mb-5 ${isRTL ? 'flex-row-reverse' : ''}`}
                 >
                   <div className="w-10 sm:w-12 h-px bg-[#C9A84C]" />
                   <span className="text-[#C9A84C] text-[10px] sm:text-[11px] font-black tracking-[0.35em] sm:tracking-[0.4em] uppercase latin-tracking">
@@ -150,8 +150,8 @@ export default function HeroCarousel({ banners }: HeroCarouselProps) {
                 {/* Headline */}
                 <motion.h1
                   variants={contentItem}
-                  className="font-serif font-bold text-white leading-[1.05] mb-4 sm:mb-6"
-                  style={{ fontSize: 'clamp(1.85rem, 5.5vw, 4.2rem)' }}
+                  className="font-serif font-bold text-white leading-[1.1] mb-2 sm:mb-6"
+                  style={{ fontSize: 'clamp(1.25rem, 4vw, 4.2rem)' }}
                 >
                   {language === 'ar' ? banner.titleAr : banner.title}
                 </motion.h1>
@@ -159,7 +159,7 @@ export default function HeroCarousel({ banners }: HeroCarouselProps) {
                 {/* Subtitle */}
                 <motion.p
                   variants={contentItem}
-                  className="text-white/70 text-sm sm:text-lg leading-relaxed mb-6 sm:mb-10 max-w-lg font-light line-clamp-3 sm:line-clamp-none"
+                  className="text-white/70 text-xs sm:text-lg leading-relaxed mb-3 sm:mb-10 max-w-lg font-light line-clamp-2 sm:line-clamp-none"
                 >
                   {language === 'ar' ? banner.subtitleAr : banner.subtitle}
                 </motion.p>
@@ -167,12 +167,12 @@ export default function HeroCarousel({ banners }: HeroCarouselProps) {
                 {/* CTA buttons */}
                 <motion.div
                   variants={contentItem}
-                  className={`flex flex-wrap items-center gap-3 sm:gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}
+                  className={`flex flex-wrap items-center gap-2 sm:gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}
                 >
                   <Link
                     href={bannerHref(banner)}
                     onClick={() => trackBannerClick(banner.id)}
-                    className="group inline-flex items-center gap-3 bg-[#C9A84C] text-[#2D1F1F] px-6 sm:px-8 py-3 sm:py-4 text-[11px] font-black tracking-[0.2em] sm:tracking-[0.25em] uppercase rounded-md hover:bg-white transition-all duration-300"
+                    className="group inline-flex items-center gap-2 sm:gap-3 bg-[#C9A84C] text-[#2D1F1F] px-4 sm:px-8 py-2 sm:py-4 text-[10px] sm:text-[11px] font-black tracking-[0.15em] sm:tracking-[0.25em] uppercase rounded-md hover:bg-white transition-all duration-300"
                   >
                     {language === 'ar' ? banner.buttonTextAr : banner.buttonText}
                     <ChevronRight
@@ -182,7 +182,7 @@ export default function HeroCarousel({ banners }: HeroCarouselProps) {
                   </Link>
                   <Link
                     href="/products"
-                    className="inline-flex items-center gap-2 text-white/80 text-[11px] font-semibold tracking-[0.2em] uppercase border-b border-white/30 pb-0.5 hover:text-[#C9A84C] hover:border-[#C9A84C] transition-all duration-300"
+                    className="hidden sm:inline-flex items-center gap-2 text-white/80 text-[11px] font-semibold tracking-[0.2em] uppercase border-b border-white/30 pb-0.5 hover:text-[#C9A84C] hover:border-[#C9A84C] transition-all duration-300"
                   >
                     {language === 'ar' ? 'كل المنتجات' : 'View All'}
                   </Link>
@@ -193,8 +193,8 @@ export default function HeroCarousel({ banners }: HeroCarouselProps) {
         </div>
       </motion.div>
 
-      {/* Slide counter — top right */}
-      <div className="absolute top-6 right-8 z-20 flex items-center gap-2">
+      {/* Slide counter — top right (desktop only) */}
+      <div className="absolute top-6 right-8 z-20 hidden sm:flex items-center gap-2">
         <span className="text-white text-lg font-serif">0{active + 1}</span>
         <div className="w-px h-6 bg-white/30 rotate-12" />
         <span className="text-white/40 text-sm font-light">0{banners.length}</span>
@@ -221,7 +221,7 @@ export default function HeroCarousel({ banners }: HeroCarouselProps) {
       </button>
 
       {/* Progress dots — bottom center */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex items-center gap-3">
+      <div className="absolute bottom-3 sm:bottom-8 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 sm:gap-3">
         {banners.map((_, i) => (
           <button
             key={i}

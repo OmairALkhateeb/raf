@@ -15,7 +15,7 @@ export default function CategoryGrid({ categories }: CategoryGridProps) {
   const { language, t, isRTL } = useLanguage();
 
   return (
-    <section className="py-20 bg-[#FAF7F2]" dir={isRTL ? 'rtl' : 'ltr'}>
+    <section className="pt-6 pb-14 sm:pt-12 sm:pb-20 lg:py-20 bg-[#FAF7F2]" dir={isRTL ? 'rtl' : 'ltr'}>
       <div className="max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16">
         {/* Section header */}
         <motion.div
@@ -23,9 +23,9 @@ export default function CategoryGrid({ categories }: CategoryGridProps) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="flex flex-col items-center text-center mb-14"
+          className="flex flex-col items-center text-center mb-8 sm:mb-12 lg:mb-14"
         >
-          <span className="text-[10px] font-black tracking-[0.45em] uppercase mb-4 text-[#C9A84C]">
+          <span className="text-[10px] font-black tracking-[0.45em] uppercase mb-2 sm:mb-4 text-[#C9A84C]">
             {language === 'ar' ? 'اكتشف' : 'Discover'}
           </span>
           <div className={`flex items-center gap-5 w-full max-w-lg ${isRTL ? 'flex-row-reverse' : ''}`}>

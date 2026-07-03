@@ -12,23 +12,36 @@ interface CartContextType {
   itemCount: number;
   subtotal: number;
   isInCart: (productId: string) => boolean;
+  orderNotes: string;
+  setOrderNotes: (notes: string) => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const [items, setItems] = useState<CartItem[]>([]);
+  const [orderNotes, setOrderNotesState] = useState('');
 
   useEffect(() => {
     try {
       const saved = localStorage.getItem('raf-cart');
       if (saved) setItems(JSON.parse(saved));
+      const savedNotes = localStorage.getItem('raf-order-notes');
+      if (savedNotes) setOrderNotesState(savedNotes);
     } catch {}
   }, []);
 
   useEffect(() => {
     localStorage.setItem('raf-cart', JSON.stringify(items));
   }, [items]);
+
+  useEffect(() => {
+    localStorage.setItem('raf-order-notes', orderNotes);
+  }, [orderNotes]);
+
+  const setOrderNotes = useCallback((notes: string) => {
+    setOrderNotesState(notes);
+  }, []);
 
   const addToCart = useCallback((product: Product, qty = 1, color?: string, size?: string) => {
     setItems(prev => {
@@ -56,7 +69,11 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     );
   }, [removeFromCart]);
 
-  const clearCart = useCallback(() => setItems([]), []);
+  const clearCart = useCallback(() => {
+    setItems([]);
+    setOrderNotesState('');
+    localStorage.removeItem('raf-order-notes');
+  }, []);
 
   const itemCount = items.reduce((sum, i) => sum + i.quantity, 0);
   const subtotal = items.reduce((sum, i) => sum + i.product.price * i.quantity, 0);
@@ -65,7 +82,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <CartContext.Provider value={{
       items, addToCart, removeFromCart, updateQuantity, clearCart,
-      itemCount, subtotal, isInCart,
+      itemCount, subtotal, isInCart, orderNotes, setOrderNotes,
     }}>
       {children}
     </CartContext.Provider>

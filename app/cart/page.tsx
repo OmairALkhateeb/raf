@@ -14,7 +14,7 @@ import { getFeaturedProducts } from '@/data/products';
 const cx = 'max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16';
 
 export default function CartPage() {
-  const { items, removeFromCart, updateQuantity, subtotal, clearCart } = useCart();
+  const { items, removeFromCart, updateQuantity, subtotal, clearCart, orderNotes, setOrderNotes } = useCart();
   const { showToast } = useApp();
   const { language, t, isRTL } = useLanguage();
   const [promoCode, setPromoCode] = useState('');
@@ -175,6 +175,25 @@ export default function CartPage() {
               >
                 {language === 'en' ? 'Clear Cart' : 'مسح السلة'}
               </button>
+            </div>
+
+            {/* Order notes — gifts & special instructions */}
+            <div className="mt-8 border border-[#2D1F1F]/8 rounded-xl p-6">
+              <h3 className="text-[10px] font-black tracking-[0.3em] uppercase text-[#2D1F1F]/50 mb-3">
+                {t.cart.orderNotes}
+              </h3>
+              <p className="text-xs text-[#2D1F1F]/45 mb-4 leading-relaxed">
+                {t.cart.orderNotesHint}
+              </p>
+              <textarea
+                value={orderNotes}
+                onChange={e => setOrderNotes(e.target.value)}
+                placeholder={t.cart.orderNotesPlaceholder}
+                rows={4}
+                className={`w-full px-4 py-3 border border-[#2D1F1F]/15 bg-[#FAF7F2] text-sm text-[#2D1F1F] placeholder-[#2D1F1F]/30 rounded-md focus:outline-none focus:border-[#C9A84C] transition-colors resize-y min-h-[100px] ${
+                  isRTL ? 'text-right' : 'text-left'
+                }`}
+              />
             </div>
           </div>
 

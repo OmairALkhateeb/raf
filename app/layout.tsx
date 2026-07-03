@@ -4,6 +4,7 @@ import "./globals.css";
 import { CartProvider } from "@/contexts/CartContext";
 import { WishlistProvider } from "@/contexts/WishlistContext";
 import { LanguageProvider } from "@/contexts/LanguageContext";
+import { DeliveryLocationProvider } from "@/contexts/DeliveryLocationContext";
 import { AppProvider } from "@/contexts/AppContext";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
@@ -67,6 +68,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     >
       <body className="min-h-full flex flex-col bg-[#FAF7F2] font-sans">
         <LanguageProvider>
+          <DeliveryLocationProvider>
           <CartProvider>
             <WishlistProvider>
               <AppProvider>
@@ -83,6 +85,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               </AppProvider>
             </WishlistProvider>
           </CartProvider>
+          </DeliveryLocationProvider>
         </LanguageProvider>
       </body>
     </html>

@@ -19,7 +19,7 @@ const labelClass = 'block text-[10px] font-black tracking-[0.2em] uppercase text
 
 export default function CheckoutPage() {
   const router = useRouter();
-  const { items, subtotal, clearCart } = useCart();
+  const { items, subtotal, clearCart, orderNotes, setOrderNotes } = useCart();
   const { language, t, isRTL } = useLanguage();
 
   const [step, setStep] = useState<Step>('contact');
@@ -171,6 +171,23 @@ export default function CheckoutPage() {
                         </div>
                       ))}
                     </div>
+
+                    {/* Order notes */}
+                    <div className="mt-6 pt-6 border-t border-[#2D1F1F]/8">
+                      <label className={labelClass}>{t.checkout.orderNotes}</label>
+                      <p className="text-xs text-[#2D1F1F]/40 mb-3 leading-relaxed">
+                        {t.checkout.orderNotesHint}
+                      </p>
+                      <textarea
+                        value={orderNotes}
+                        onChange={e => setOrderNotes(e.target.value)}
+                        placeholder={t.checkout.orderNotesPlaceholder}
+                        rows={4}
+                        className={`w-full px-4 py-3 border border-[#2D1F1F]/15 bg-[#FAF7F2] text-sm text-[#2D1F1F] placeholder-[#2D1F1F]/30 rounded-md focus:outline-none focus:border-[#C9A84C] transition-colors resize-y min-h-[100px] ${
+                          isRTL ? 'text-right' : 'text-left'
+                        }`}
+                      />
+                    </div>
                   </div>
                 </motion.div>
               )}
@@ -269,6 +286,16 @@ export default function CheckoutPage() {
                           {paymentMethod === 'cod' ? t.checkout.cod : t.checkout.creditCard}
                         </span>
                       </div>
+                      {orderNotes.trim() && (
+                        <div className={`pt-3 border-t border-[#2D1F1F]/8 ${isRTL ? 'text-right' : 'text-left'}`}>
+                          <span className="block text-[10px] font-black tracking-[0.2em] uppercase text-[#2D1F1F]/45 mb-1">
+                            {t.checkout.orderNotes}
+                          </span>
+                          <p className="text-sm text-[#2D1F1F]/70 leading-relaxed whitespace-pre-wrap">
+                            {orderNotes}
+                          </p>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </motion.div>
