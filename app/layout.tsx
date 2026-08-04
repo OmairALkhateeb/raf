@@ -6,6 +6,7 @@ import { WishlistProvider } from "@/contexts/WishlistContext";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { DeliveryLocationProvider } from "@/contexts/DeliveryLocationContext";
 import { AppProvider } from "@/contexts/AppContext";
+import { AuthProvider } from "@/contexts/AuthContext";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import MobileMenu from "@/components/layout/MobileMenu";
@@ -68,6 +69,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     >
       <body className="min-h-full flex flex-col bg-[#FAF7F2] font-sans">
         <LanguageProvider>
+          <AuthProvider>
           <DeliveryLocationProvider>
           <CartProvider>
             <WishlistProvider>
@@ -86,6 +88,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </WishlistProvider>
           </CartProvider>
           </DeliveryLocationProvider>
+          </AuthProvider>
         </LanguageProvider>
       </body>
     </html>

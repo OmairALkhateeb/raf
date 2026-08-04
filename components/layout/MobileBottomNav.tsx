@@ -6,6 +6,7 @@ import { Home, LayoutGrid, Store, ShoppingBag, User } from 'lucide-react';
 import { useApp } from '@/contexts/AppContext';
 import { useCart } from '@/contexts/CartContext';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useAuth } from '@/contexts/AuthContext';
 
 // Mobile-only bottom navigation. Premium, RTL-aware, fixed to the bottom and
 // hidden from `lg` up. The centre "Cart" action is emphasised. "Categories"
@@ -16,6 +17,7 @@ export default function MobileBottomNav() {
   const { setMobileMenuOpen } = useApp();
   const { itemCount } = useCart();
   const { language, isRTL } = useLanguage();
+  const { isAuthenticated } = useAuth();
 
   const tr = (en: string, ar: string) => (language === 'ar' ? ar : en);
 
@@ -73,9 +75,11 @@ export default function MobileBottomNav() {
         </Link>
 
         {/* Account */}
-        <Link href="/account" className={linkCls(isActive('/account'))}>
-          <User size={20} strokeWidth={isActive('/account') ? 2.4 : 2} />
-          <span className="text-[10px] font-bold tracking-wide">{tr('Account', 'حسابي')}</span>
+        <Link href={isAuthenticated ? '/account' : '/login'} className={linkCls(isActive('/account') || isActive('/login'))}>
+          <User size={20} strokeWidth={isActive('/account') || isActive('/login') ? 2.4 : 2} />
+          <span className="text-[10px] font-bold tracking-wide">
+            {isAuthenticated ? tr('Account', 'حسابي') : tr('Sign In', 'تسجيل الدخول')}
+          </span>
         </Link>
       </div>
     </nav>

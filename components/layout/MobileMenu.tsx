@@ -2,20 +2,24 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { X, ChevronRight, ChevronDown, Home, ShoppingBag, Heart, User, Globe, Tag } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { X, ChevronRight, ChevronDown, Home, ShoppingBag, Heart, User, Globe, Tag, LogOut } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Logo from '@/components/common/Logo';
 import { useApp } from '@/contexts/AppContext';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useCart } from '@/contexts/CartContext';
 import { useWishlist } from '@/contexts/WishlistContext';
+import { useAuth } from '@/contexts/AuthContext';
 import { categories } from '@/data/categories';
 
 export default function MobileMenu() {
-  const { isMobileMenuOpen, setMobileMenuOpen } = useApp();
+  const router = useRouter();
+  const { isMobileMenuOpen, setMobileMenuOpen, showToast } = useApp();
   const { language, setLanguage, t, isRTL } = useLanguage();
   const { itemCount } = useCart();
   const { count: wishlistCount } = useWishlist();
+  const { isAuthenticated, logout } = useAuth();
   const [expanded, setExpanded] = useState<string | null>(null);
 
   useEffect(() => {
@@ -29,13 +33,24 @@ export default function MobileMenu() {
 
   const close = () => setMobileMenuOpen(false);
 
+  const handleLogout = () => {
+    logout();
+    close();
+    showToast(language === 'en' ? 'Signed out successfully' : 'تم تسجيل الخروج بنجاح', 'success');
+    router.push('/');
+  };
+
   const navItems = [
     { href: '/', label: t.nav.home, icon: Home },
     { href: '/products', label: t.nav.products, icon: ShoppingBag },
     { href: '/brands', label: t.nav.brands, icon: Tag },
     { href: '/cart', label: t.nav.cart, icon: ShoppingBag, badge: itemCount },
     { href: '/wishlist', label: t.nav.wishlist, icon: Heart, badge: wishlistCount },
-    { href: '/account', label: t.nav.account, icon: User },
+    {
+      href: isAuthenticated ? '/account' : '/login',
+      label: isAuthenticated ? t.nav.account : (language === 'en' ? 'Sign In' : 'تسجيل الدخول'),
+      icon: User,
+    },
   ];
 
   return (
@@ -143,7 +158,7 @@ export default function MobileMenu() {
             </div>
 
             {/* Footer */}
-            <div className="p-4 border-t border-cream-darker">
+            <div className="p-4 border-t border-cream-darker space-y-2.5">
               <button
                 onClick={() => {
                   setLanguage(language === 'en' ? 'ar' : 'en');
@@ -154,6 +169,15 @@ export default function MobileMenu() {
                 <Globe size={16} />
                 {language === 'en' ? 'التبديل إلى العربية' : 'Switch to English'}
               </button>
+              {isAuthenticated && (
+                <button
+                  onClick={handleLogout}
+                  className="flex items-center gap-2 w-full px-4 py-3 border border-[#2D1F1F]/15 text-red-400 text-[11px] font-black tracking-[0.15em] uppercase rounded-md hover:bg-red-50 transition-colors"
+                >
+                  <LogOut size={16} />
+                  {language === 'en' ? 'Sign Out' : 'تسجيل الخروج'}
+                </button>
+              )}
             </div>
           </motion.div>
         </>

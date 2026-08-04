@@ -11,6 +11,7 @@ import { useCart } from '@/contexts/CartContext';
 import { useWishlist } from '@/contexts/WishlistContext';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useApp } from '@/contexts/AppContext';
+import { useAuth } from '@/contexts/AuthContext';
 import { products } from '@/data/products';
 import DeliveryLocationSelector from '@/components/layout/DeliveryLocationSelector';
 
@@ -25,6 +26,7 @@ export default function Header() {
   const { count: wishlistCount } = useWishlist();
   const { language, setLanguage, t, isRTL } = useLanguage();
   const { isSearchOpen, setSearchOpen, setMobileMenuOpen } = useApp();
+  const { isAuthenticated, user } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -194,11 +196,16 @@ export default function Header() {
 
               {/* Account */}
               <Link
-                href="/account"
-                className="hidden sm:flex p-1.5 text-[#2D1F1F]/70 hover:text-[#C9A84C] transition-colors"
-                aria-label="Account"
+                href={isAuthenticated ? '/account' : '/login'}
+                className="hidden sm:flex items-center gap-1.5 p-1.5 text-[#2D1F1F]/70 hover:text-[#C9A84C] transition-colors"
+                aria-label={isAuthenticated ? 'Account' : 'Sign in'}
               >
                 <User size={19} />
+                {isAuthenticated && user && (
+                  <span className="hidden xl:inline text-[11px] font-bold tracking-wide max-w-[90px] truncate">
+                    {user.name.split(' ')[0]}
+                  </span>
+                )}
               </Link>
 
               {/* Cart CTA */}

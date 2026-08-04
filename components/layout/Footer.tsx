@@ -122,10 +122,17 @@ export default function Footer() {
           <div>
             <h4 className="text-[10px] font-black tracking-[0.3em] uppercase text-white/60 mb-5">{t.footer.customerService}</h4>
             <ul className="space-y-3">
-              {[t.footer.faq, t.footer.shipping, t.footer.returns, t.footer.contact, t.footer.privacy, t.footer.terms].map((label, i) => (
-                <li key={i}>
-                  <Link href="#" className="text-[13px] text-white/35 hover:text-[#C9A84C] transition-colors">
-                    {label}
+              {[
+                { href: '/faq', label: t.footer.faq },
+                { href: '/shipping', label: t.footer.shipping },
+                { href: '/returns', label: t.footer.returns },
+                { href: '/contact', label: t.footer.contact },
+                { href: '/privacy', label: t.footer.privacy },
+                { href: '/terms', label: t.footer.terms },
+              ].map(link => (
+                <li key={link.href}>
+                  <Link href={link.href} className="text-[13px] text-white/35 hover:text-[#C9A84C] transition-colors">
+                    {link.label}
                   </Link>
                 </li>
               ))}
